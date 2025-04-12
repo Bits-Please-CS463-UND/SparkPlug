@@ -1,0 +1,18 @@
+{% extends "/layouts/tabbed.html.twig" %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+{% block title %}
+    Admin
+{% endblock %}
+{% block sidebar %}
+    <twig:sidebar-item icon="bi-house-door-fill" tab="home" name="Home" selected/>
+    <twig:sidebar-item icon="bi-heart-pulse-fill" tab="diagnostics" name="Diagnostics" />
+    <twig:sidebar-item icon="bi-compass-fill" tab="activity" name="GPS and Activity" />
+{% endblock %}
+{% block panels %}
+    <twig:panel id="home" template="/panel/debug/home.html.twig" skeleton selected/>
+    <twig:panel id="diagnostics" template="/panel/debug/logs.html.twig" heading="Logs & Diagnostics"/>
+    <twig:panel id="activity" template="/panel/debug/activity.html.twig" heading="GPS & Activity"/>
+{% endblock %}

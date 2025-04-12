@@ -1,0 +1,7 @@
+.env.local
+public/bundles
+var
+vendor
+node_modules
+public/build
+.idea
