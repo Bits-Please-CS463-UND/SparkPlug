@@ -1,5 +1,3 @@
-import '@popperjs/core';
-
 import './typescript/egg'
 import './typescript/forms'
 import './typescript/modal'
@@ -12,7 +10,6 @@ import './typescript/map'
 declare global {
     interface Window {
         flashes: Flash[];
-        $: JQueryStatic;
         editButtonProxy: Function;
     }
 }
