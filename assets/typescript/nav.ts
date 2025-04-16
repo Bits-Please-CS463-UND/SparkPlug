@@ -1,70 +1,78 @@
-function processMajorTabChange(node: HTMLElement){
-    // Declare some constants
-    const others = document.querySelectorAll(`nav a:not(#${node.id})`);
-    const myName = node.attributes.getNamedItem("data-my-name")?.value ?? "";
+import { Tab } from "bootstrap";
 
-    // Am I a parent or a child?
-    if (node.attributes.getNamedItem("data-sidenav-parent")){
-        const parentTabId = node.attributes.getNamedItem("data-sidenav-parent")?.value;
+export class PaneStack {
+    topPane: Tab | null;
+    subPaneStack: Tab[];
+    backButton: HTMLButtonElement;
+    constructor(backButton: HTMLButtonElement){
+        this.topPane = null;
+        this.subPaneStack = [];
+        this.backButton = backButton;
+    }
 
-        // Set this child group visible
-        document.querySelectorAll(`nav a[data-sidenav-parent=\"${parentTabId}\"]`).forEach((element) => {
-            element.classList.remove("visually-hidden");
-        });
+    setTopPane(pane: HTMLElement){
+        this.topPane = new Tab(pane);
+        this.subPaneStack = [];
+        this.showPane();
+    }
 
-        // Set all others to hidden
-        document.querySelectorAll(`nav a[data-sidenav-parent]:not([data-sidenav-parent='${parentTabId}'])`)
-            .forEach((element) => {
-                element.classList.add("visually-hidden");
-            });
+    showPane() {
+        const topSubPane = this.subPaneStack.at(-1);
+        if (topSubPane){
+            topSubPane.show();
+            this.backButton.style.display = 'block';
+            this.backButton.onclick = (e) => {
+                e.preventDefault()
+                this.popSubPane();
+            }
+        } else if (this.topPane){
+            this.topPane.show();
+            this.backButton.style.display = 'none';
+        }
+    }
 
-        // Remove child-selected from others, but ensure that the parent has it!
-        others.forEach((element) => {
-            element.classList.remove("child-selected")
-        })
-        document.getElementById(parentTabId + "_link")?.classList.add("child-selected");
+    addSubPane(pane: HTMLElement) {
+        this.subPaneStack.push(new Tab(pane));
+        this.showPane()
+    }
 
-    } else {
-        // Show children that are mine
-        document.querySelectorAll(`nav a[data-sidenav-parent='${myName}']`).forEach((element) => {
-            element.classList.remove("visually-hidden");
-        });
-
-        // Hide those that aren't
-        document.querySelectorAll(`nav a[data-sidenav-parent]:not([data-sidenav-parent='${myName}'])`)
-            .forEach((element) => {
-                element.classList.add("visually-hidden");
-            });
-
-        // Snatch the child-selected class
-        node.classList.add("child-selected");
-        others.forEach((element) => {
-            element.classList.remove("child-selected");
-        });
+    popSubPane() {
+        this.subPaneStack.pop();
+        this.showPane();
     }
 }
 
-window.addEventListener("load", (_e) => {
-    // Process initial tab layout
-    const activeTab = document.querySelector("nav a.active");
-    if (activeTab && activeTab instanceof HTMLElement)
-        processMajorTabChange(activeTab);
+window.addEventListener("load", () => {
+    // Initialize tabbing
+    const backButton = document.getElementById('back_btn');
+    const homePane = document.getElementById('home_link')
+    if (backButton instanceof HTMLButtonElement && homePane instanceof HTMLButtonElement) {
+        window.panes = new PaneStack(backButton);
+        window.panes.setTopPane(homePane);
+    }
 
-    // Add a mutation observer to watch for aria-selected changes
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (
-                mutation.type === "attributes"
-                && mutation.attributeName === "aria-selected"
-                && mutation.target instanceof HTMLElement
-                && mutation.target.getAttribute("aria-selected") === "true") {
-                processMajorTabChange(<HTMLElement>(mutation.target));
-            }
-        });
-    });
+    // Initialize submenu buttons
+    document.querySelectorAll('[data-pane-control="sub"]').forEach((e: Element) => {
+        if (e instanceof HTMLButtonElement){
+            e.addEventListener('click', (event: Event) => {
+                event.preventDefault();
+                const targetSelector = e.attributes.getNamedItem('data-bs-target');
+                if (targetSelector){
+                    const targetNavItem = document.querySelector(targetSelector.value);
+                    if (targetNavItem instanceof HTMLButtonElement) {
+                        window.panes.addSubPane(targetNavItem);
+                    }
+                }
+            })
+        }
+    })
 
-    // Add hook for tab changes
-    document.querySelectorAll("nav a[data-bs-toggle='tab']").forEach((element) => {
-        observer.observe(element, {attributes: true});
-    });
+    // Initialize major tab buttons
+    document.querySelectorAll('[data-pane-control="top"]').forEach((e: Element) => {
+        e.addEventListener('click', (event: Event) => {
+            event.preventDefault();
+            if (e instanceof HTMLButtonElement)
+                window.panes.setTopPane(e);
+        })
+    })
 })

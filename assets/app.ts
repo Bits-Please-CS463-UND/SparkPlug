@@ -5,12 +5,14 @@ import './typescript/flashes'
 import './typescript/popover'
 import './typescript/nav'
 import './typescript/map'
+import {PaneStack} from "./typescript/nav";
 
 
 declare global {
     interface Window {
         flashes: Flash[];
         editButtonProxy: Function;
+        panes: PaneStack
     }
 }
 

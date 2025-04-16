@@ -1,17 +1,21 @@
 <header class="fixed-top shadow">
     <nav class="navbar navbar-expand bg-body-tertiary" style="max-height: 56px;">
         <div class="container-fluid">
-            <a id="back_btn" href="#">
-                <span class="bi-chevron-left fs-2 pe-1"></span>
-            </a>
-            <a id="root_url" href="{{ url('root') }}">
+            <div>
+                <button id="back_btn" href="#" class='btn btn-link px-0' style="display: none;">
+                    <span class="bi-chevron-left fs-2 pe-1"></span>
+                </button>
+            </div>
+            <a id="root_url" class="translate-middle-x" href="{{ url('root') }}" style="position: absolute; text-align: center; left: 50%;">
                 <div class="navbar-brand align-items-center d-inline-flex gap-2">
                     <span class="pe-1 d-block" aria-description="Site Logo" id="site_logo" style='background-image: url("{{ asset("img/favicon.svg") }}");'></span>
                     HOOLY SHIT
                 </div>
             </a>
             <div class="navbar-nav">
-                <a class="nav-link" href="https://jmelancon.com">Admin</a>
+                <button class="fpx-0 btn btn-link" data-pane-control="sub" data-bs-target="#notifications_link">
+                    <span class="bi-bell-fill fs-2 pe-1"></span>
+                </button>
             </div>
         </div>
     </nav>
