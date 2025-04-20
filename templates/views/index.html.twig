@@ -1,0 +1,12 @@
+{% extends "/layouts/base.html.twig" %}
+{% block body %}
+    <a href="#" onclick="window.open('{{ path('app') }}','targetWindow',
+    `toolbar=no,
+    location=no,
+    status=no,
+    menubar=no,
+    scrollbars=yes,
+    resizable=no,
+    width=640,
+    height=920`);">Launch Simulator</a>
+{% endblock %}

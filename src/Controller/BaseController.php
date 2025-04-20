@@ -16,7 +16,17 @@ class BaseController extends AbstractController
         methods: ["GET"]
     )]
     #[Template(
-        template: "/views/debug.html.twig"
+        template: "/views/index.html.twig"
     )]
     public function root(){}
+
+    #[Route(
+        path: "/app",
+        name: "app",
+        methods: ["GET"]
+    )]
+    #[Template(
+        template: "/views/app.html.twig"
+    )]
+    public function app(){}
 }

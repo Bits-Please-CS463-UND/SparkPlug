@@ -1,0 +1,35 @@
+{% extends "/layouts/tabbed.html.twig" %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+{% block header %}
+    <twig:header-mobile/>
+{% endblock %}
+{% block title %}
+    car app :3
+{% endblock %}
+{% block sidebar %}
+    <twig:sidebar-item icon="bi-house-door-fill" tab="home" name="Home" selected/>
+    <twig:sidebar-item icon="bi-heart-pulse-fill" tab="diagnostics" name="Diagnostics" />
+    <twig:sidebar-item icon="bi-compass-fill" tab="activity" name="GPS and Activity" />
+
+    {# Stupid hack: these are here but hidden so we can mimmic sub-tabs #}
+    <twig:sidebar-item icon="bi-times" tab="actions" name="Actions" hidden/>
+    <twig:sidebar-item icon="bi-times" tab="metrics" name="Metrics" hidden/>
+    <twig:sidebar-item icon="bi-times" tab="notifications" name="Notifications" hidden/>
+    <twig:sidebar-item icon="bi-times" tab="user" name="Preferences" hidden/>
+    <twig:sidebar-item icon="bi-times" tab="vehicle" name="Vehicle Preferences" hidden/>
+    <twig:sidebar-item icon="bi-times" tab="driver" name="Add/Remove Drivers" hidden/>
+{% endblock %}
+{% block panels %}
+    <twig:panel id="home" template="/panel/app/home.html.twig" skeleton selected/>
+    <twig:panel id="diagnostics" template="/panel/app/logs.html.twig" heading="Logs & Diagnostics" skeleton/>
+    <twig:panel id="activity" template="/panel/app/activity.html.twig" heading="GPS & Activity" skeleton/>
+    <twig:panel id="actions" template="/panel/app/actions.html.twig" heading="Actions" />
+    <twig:panel id="metrics" template="/panel/app/metrics.html.twig" heading="Metrics"/>
+    <twig:panel id="notifications" template="/panel/app/notifications.html.twig" heading="Notifications"/>
+    <twig:panel id="user" template="/panel/app/user.html.twig" heading="Preferences"/>
+    <twig:panel id="vehicle" template="/panel/app/vehicle.html.twig" heading="Vehicle Preferences" skeleton />
+    <twig:panel id="driver" template="/panel/app/driver.html.twig" heading="Add/Remove Drivers"/>
+{% endblock %}

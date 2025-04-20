@@ -1,0 +1,32 @@
+<header class="fixed-top shadow">
+    <div class="w-100 bg-secondary text-light d-flex">
+        <span class="p-1 ps-2">12:40PM</span>
+        <div class="ms-auto p-1 pe-2">
+            <span class="bi-wifi pe-1"></span>
+            <span class="bi-battery-full"></span>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand bg-body-tertiary" style="max-height: 56px;">
+        <div class="container-fluid">
+            <div>
+                <button id="back_btn" href="#" class='btn btn-link px-0' style="display: none;">
+                    <span class="bi-chevron-left fs-2 pe-1"></span>
+                </button>
+            </div>
+            <a id="root_url" class="translate-middle-x" href="{{ url('root') }}" style="position: absolute; text-align: center; left: 50%;">
+                <div class="navbar-brand align-items-center d-inline-flex gap-2">
+                    <span class="pe-1 d-block" aria-description="Site Logo" id="site_logo" style='background-image: url("{{ asset("img/favicon.svg") }}");'></span>
+                    car app :3
+                </div>
+            </a>
+            <div class="navbar-nav">
+                <button class="fpx-0 btn btn-link" data-pane-control="sub" data-bs-target="#notifications_link">
+                    <span class="bi-bell-fill fs-2 pe-1"></span>
+                </button>
+                <button class="fpx-0 btn btn-link" data-pane-control="sub" data-bs-target="#user_link">
+                    <span class="bi-person-circle fs-2 pe-1"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+</header>

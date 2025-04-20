@@ -11,12 +11,9 @@ import {PaneStack} from "./typescript/nav";
 declare global {
     interface Window {
         flashes: Flash[];
-        editButtonProxy: Function;
         panes: PaneStack
     }
 }
-
-
 
 // Light/Dark mode management
 const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');

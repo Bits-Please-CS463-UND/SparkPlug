@@ -54,14 +54,24 @@ body {
     margin-right: -3rem;
     margin-top: -0.5rem;
 
-    > div {
+    > div, a {
         padding: 1rem 3rem 0 3rem;
         border-bottom: 1px solid var(--bs-border-color-translucent);
     }
-    > div:nth-child(odd){
-        background-color: var(--bs-light-bg-subtle);
+    > a {
+        color: var(--bs-body-color);
+        transition: 50ms ease;
     }
-    > div:first-child{
+    > div:nth-child(odd), > a:nth-child(odd){
+        background-color: var(--bs-light-bg-subtle);
+        &:is(a):hover{
+            background-color: color-mix(in srgb, var(--bs-light-bg-subtle), black 10%);
+        }
+    }
+    > a:nth-child(even):hover{
+        background-color: color-mix(in srgb, var(--bs-body-bg), black 10%);
+    }
+    > div:first-child, > a:first-child{
         border-top: 1px solid var(--bs-border-color-translucent);
     }
 

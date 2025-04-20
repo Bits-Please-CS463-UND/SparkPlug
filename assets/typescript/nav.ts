@@ -53,7 +53,7 @@ window.addEventListener("load", () => {
 
     // Initialize submenu buttons
     document.querySelectorAll('[data-pane-control="sub"]').forEach((e: Element) => {
-        if (e instanceof HTMLButtonElement){
+        if (e instanceof HTMLButtonElement || e instanceof HTMLAnchorElement){
             e.addEventListener('click', (event: Event) => {
                 event.preventDefault();
                 const targetSelector = e.attributes.getNamedItem('data-bs-target');
