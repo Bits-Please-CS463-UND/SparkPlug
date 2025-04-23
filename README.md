@@ -62,6 +62,7 @@ currently have the project's root as your working directory.
       DATABASE_DSN=sqlite://%kernel.project_dir%/var/app.db
       ```
 6. Install PHP vendor files with `composer install`
+    - This step may fail if the `zip` extension is not enabled in `php.ini`.
 7. Install TS vendor files with `npm install`
 8. Create database with `php bin/console doctrine:database:create`
 9. Create schema with `php bin/console doctrine:schema:update --force`
