@@ -37,7 +37,7 @@ currently have the project's root as your working directory.
       APP_SECRET='abcdefghijklmnopqrstuvwxyz123456'
       
       # Doctrine DB
-      DATABASE_DSN=sqlite://var/database.sqlite
+      DATABASE_DSN=sqlite://%kernel.project_dir%/var/app.db
       ```
 6. Install PHP vendor files with `composer install`
 7. Install TS vendor files with `npm install`
