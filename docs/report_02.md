@@ -34,6 +34,7 @@ be working on sequence diagrams and a system dictionary.
 | Primary/Secondary Actors      | Primary: user; Secondary: system                                                                                                      |
 | Trigger                       | Selects function to add or remove a vehicle                                                                                           |
 | Description                   | Users logs in and navigates to the function to add or remove a vehicle                                                                |  
+
 *Table 1: Vehicle addition/deletion use case description*
 
 | Key                           | Value                                                                                                                                                                                                                |
@@ -46,6 +47,7 @@ be working on sequence diagrams and a system dictionary.
 | Primary/Secondary Actors      | Primary: user; Secondary: system                                                                                                                                                                                     |
 | Trigger                       | A user is logged in, one of their vehicles is selected, and the function to view metrics is selected.                                                                                                                |
 | Description                   | User logs in and selects a vehicle’s metrics to view.                                                                                                                                                                |  
+
 *Table 2: Vehicle metrics viewing use case description*
 
 ## Activity Diagrams
