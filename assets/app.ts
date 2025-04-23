@@ -1,4 +1,3 @@
-import './typescript/egg'
 import './typescript/forms'
 import './typescript/modal'
 import './typescript/flashes'
