@@ -64,13 +64,12 @@ currently have the project's root as your working directory.
 6. Install PHP vendor files with `composer install`
     - This step may fail if the `zip` extension is not enabled in `php.ini`.
 7. Install TS vendor files with `npm install`
-8. Create database with `php bin/console doctrine:database:create`
-9. Create schema with `php bin/console doctrine:schema:update --force`
-10. Compile TS & SCSS with `npm run build`
-     - During active development, it may be preferable to run
-       `npm run watch`, which will stay running and rebuild source
-       files while you edit TypeScript or SCSS files.
-11. Serve with `symfony serve`
+8. Create schema with `php bin/console doctrine:schema:update --force`
+9. Compile TS & SCSS with `npm run build`
+    - During active development, it may be preferable to run
+      `npm run watch`, which will stay running and rebuild source
+      files while you edit TypeScript or SCSS files.
+10. Serve with `symfony serve`
 
 ## Dependencies / Thanks
 
