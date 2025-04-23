@@ -15,15 +15,19 @@ By the next reporting period, we hope to have more of the application modeled wi
 ## Class Diagram 
 
 ![A UML Class Diagram modelling our vision for the requested system](/docs/assets/report_01/figure_01.png)
+*Figure 1: A UML Class Diagram modelling our vision for the requested system*
 
 ## Use Case Diagram
 
 ![Use Case Diagram designed around the proposed Class Diagram](/docs/assets/report_01/figure_02.png)
+*Figure 2: Use Case Diagram designed around the proposed Class Diagram*
 
 ## Gantt Chart
 
-![Gantt Chart Initial Model](/docs/assets/report_02/figure_03.png)
+![Gantt Chart Initial Model](/docs/assets/report_01/figure_03.png)
+*Figure 3: Gantt Chart Initial Model*
 
 ## Interface Drawings
 
 ![Interface drawings. Icons are from the Font Awesome icon database, and this is the interface we plan to implement. Additionally, use of bold and oblique fonts is employed to add more depth to labels.](/docs/assets/report_01/figure_04.png)
+*Figure 4: Interface drawings. Icons are from the Font Awesome icon database, and this is the interface we plan to implement. Additionally, use of bold and oblique fonts is employed to add more depth to labels.*
