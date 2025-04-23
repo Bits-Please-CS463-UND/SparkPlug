@@ -22,6 +22,14 @@ Required features include...
  - Display fuel level
  - Activate/deactivate anti-theft alarm
 
+## Reports
+
+Over the course of development, multiple reports were required regarding
+development status. These can be found in the [`/docs`](/docs) directory.
+
+ - [Project Report 1 (`/docs/report_01.md`)](/docs/report_01.md)
+ - [Project Report 2 (`/docs/report_02.md`)](/docs/report_02.md)
+
 ## Development
 
 The following steps can be used to configure a development environment for
