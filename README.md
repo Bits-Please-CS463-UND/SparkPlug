@@ -1,12 +1,26 @@
 # cs463
 
+Term project for CS463 (Software Engineering) under Dr. Emanuel Grant at University
+of North Dakota.
+
 ## Abstract
 
-my eyes are bleeding and it's 5am i'll write this later
+From the project description...
 
-## Why
+> This request for service is for the development of a motor vehicle remote 
+> starter application that may be used on either a mobile device or a desktop 
+> computer; you must select one platform for your project.
 
-such is life
+Required features include...
+ - Internet-accessible
+ - Display of Internet connection status
+ - Audio and visual feedback
+ - Driver management
+ - Lock/unlock doors
+ - Start/stop engine
+ - Display internal/external temperature
+ - Display fuel level
+ - Activate/deactivate anti-theft alarm
 
 ## Development
 
@@ -60,5 +74,5 @@ The following frameworks, libraries, etc. are used across the application:
 
 ## License
 
-most of this code is ripped from uwu_directory. i'm not licensing
-this at the moment because i am tired. do not steal this code!
+A license is unlikely to be chosen until development is finished. As such,
+all code is currently proprietary.
