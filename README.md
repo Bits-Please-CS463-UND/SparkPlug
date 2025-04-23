@@ -34,7 +34,7 @@ currently have the project's root as your working directory.
       APP_DEBUG=1
       
       # This can just be a UUID. Make sure to drop the dashes.
-      APP_SECRET='abcdefghijklmnopqrstuvwxyz123456'
+      APP_SECRET='abcdef12345678900987654321fedcba'
       
       # Doctrine DB
       DATABASE_DSN=sqlite://%kernel.project_dir%/var/app.db
