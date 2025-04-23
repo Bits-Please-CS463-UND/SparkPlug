@@ -39,6 +39,12 @@ currently have the project's root as your working directory.
 
 1. Install PHP 8.3 or higher
     - Windows: Install a thread-safe build from [windows.php.net](https://windows.php.net/download)
+      - Additionally, the `zip` and `php_sqlite3.dll` extensions will need to
+        be enabled in `php.ini`. Do so by adding or uncommenting the following to your `[PHP]` section:
+        ```ini
+        extension=zip
+        extension=php_sqlite3.dll
+        ```
     - Mac: Install using [Homebrew](https://brew.sh)
     - Linux: Install using your distribution's repos
 2. Install [Composer](https://getcomposer.org/download/)
@@ -69,7 +75,9 @@ currently have the project's root as your working directory.
     - During active development, it may be preferable to run
       `npm run watch`, which will stay running and rebuild source
       files while you edit TypeScript or SCSS files.
-10. Serve with `symfony serve`
+10. Serve with `symfony serve`. Alternatively, if using PHPStorm, a run configuration
+    is provided in the `/.run/` directory. PHPStorm should pick this up automatically.
+    The page may be accessed at `localhost:8000`.
 
 ## Dependencies / Thanks
 
