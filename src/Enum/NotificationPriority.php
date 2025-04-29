@@ -9,4 +9,15 @@ enum NotificationPriority: string
     case MEDIUM = 'medium';
     case LOW = 'low';
     case INFO = 'info';
+
+    public static function fromString(string $value): self
+    {
+        return match ($value) {
+            'high' => self::HIGH,
+            'medium' => self::MEDIUM,
+            'low' => self::LOW,
+            'info' => self::INFO,
+            default => throw new \InvalidArgumentException('Unknown notification priority')
+        };
+    }
 }
