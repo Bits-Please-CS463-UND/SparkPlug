@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route(path: '/api/v1/vehicle/{vehicleId}/notifications', name: 'api.v1.notifications.')]
 class NotificationController extends AbstractController
 {
     private NotificationService $notificationService;
@@ -16,9 +17,7 @@ class NotificationController extends AbstractController
         $this->notificationService = $notificationService;
     }
 
-    /**
-     * @Route("/api/v1/vehicle/{vehicleId}/notifications", methods={"GET"})
-     */
+    #[Route(path: '', name: 'list', methods: ['GET'])]
     public function getNotifications(string $vehicleId): JsonResponse
     {
         $notifications = $this->notificationService->getUnseenNotification($vehicleId);
@@ -26,9 +25,7 @@ class NotificationController extends AbstractController
         return $this->json($notifications);
     }
 
-    /**
-     * @Route("/api/v1/vehicle/{vehicleId}/notifications", methods={"POST"})
-     */
+    #[Route(path: '', name: 'create', methods: ['POST'])]
     public function sendNotification(string $vehicleId, Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -46,9 +43,7 @@ class NotificationController extends AbstractController
         ], JsonResponse::HTTP_CREATED);
     }
 
-    /**
-     * @Route("/api/v1/vehicle/{vehicleId}/notifications/{notificationId}", methods={"DELETE"})
-     */
+    #[Route(path: '/{notificationId}', name: 'acknowledge', methods: ['DELETE'])]
     public function acknowledgeNotification(string $vehicleId, string $notificationId): JsonResponse
     {
         $this->notificationService->acknowledgeNotification($vehicleId, $notificationId);
