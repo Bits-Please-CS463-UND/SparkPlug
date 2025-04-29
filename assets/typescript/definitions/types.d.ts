@@ -37,13 +37,26 @@ interface Flash {
     type: string;
     message: string;
 }
+
 /**
- * User.
+ * Just all the [redacted] [redacted]. who cares!
  */
-interface User {
-    identifier: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    roleDNs: string[];
+interface VehicleData {
+    make: string;
+    model: string;
+    year: number;
+    color: string;
+    currentLocation: GPSLocation;
+    locationHistory: GPSLocation[];
+    geofence: ?Geofence;
+}
+
+interface GPSLocation {
+    lat: number;
+    lng: number;
+}
+
+interface Geofence {
+    radius: number;
+    center: GPSLocation;
 }

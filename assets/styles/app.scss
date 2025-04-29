@@ -135,8 +135,8 @@ div.dt-container div.dt-length select {
 
 @media (prefers-color-scheme: dark) {
     :root{
-        --uwu-primary-hover: color-mix(in srgb, var(--uwu-primary) 70%, black 30%);
-        --uwu-primary-held: color-mix(in srgb, var(--uwu-primary) 60%, white 20%);
+        --uwu-primary-hover: color-mix(in srgb, var(--uwu-primary) 40%, black 60%);
+        --uwu-primary-held: color-mix(in srgb, var(--uwu-primary) 70%, white 30%);
     }
 
     .leaflet-layer,
@@ -163,7 +163,12 @@ div.dt-container div.dt-length select {
 :root{
     --bs-primary: var(--uwu-primary);
     --bs-link-color: var(--uwu-primary);
+    --bs-link-hover-color: var(--uwu-primary-held);
     --bs-primary-bg-subtle: var(--uwu-primary-hover);
+    --bs-primary-border-subtle: var(--uwu-primary-hover);
+    --bs-focus-ring-color: var(--uwu-selected-shadow);
+    --bs-form-valid-color: var(--uwu-primary);
+    --bs-form-valid-border-color: var(--uwu-primary);
 }
 a{
     color: var(--uwu-primary);
@@ -208,4 +213,16 @@ a:hover{
     --bs-pagination-active-bg: var(--uwu-primary);
     --bs-pagination-active-border-color: var(--uwu-primary);
     --bs-pagination-focus-box-shadow: var(--uwu-selected-shadow);
+}
+
+.form-switch .form-check-input:focus:not(:checked) {
+    --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27%3e%3ccircle r=%273%27 fill=%27rgba%280, 0, 0, 0.25%29%27/%3e%3c/svg%3e");
+
+    @media (prefers-color-scheme: dark){
+        --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27%3e%3ccircle r=%273%27 fill=%27rgba%28255, 255, 255, 0.25%29%27/%3e%3c/svg%3e");
+    }
+}
+
+.form-check-input:focus {
+    border-color: var(--uwu-selected-shadow);
 }
