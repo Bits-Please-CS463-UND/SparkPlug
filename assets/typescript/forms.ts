@@ -26,7 +26,7 @@ window.addEventListener("load", (_e) => {
             const suffix = token ? "?token=" + encodeURIComponent(token) : "";
 
             // Serialize FormData to object
-            // This code is actually so shit it's not even funny
+            // This code is actually so garbage it's not even funny
             let serializedData = {};
             for (const item of formData) {
                 const key = item[0];
