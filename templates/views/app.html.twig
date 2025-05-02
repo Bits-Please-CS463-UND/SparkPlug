@@ -21,6 +21,7 @@
     <twig:sidebar-item icon="bi-times" tab="user" name="Preferences" hidden/>
     <twig:sidebar-item icon="bi-times" tab="vehicle" name="Vehicle Preferences" hidden/>
     <twig:sidebar-item icon="bi-times" tab="driver" name="Add/Remove Drivers" hidden/>
+    <twig:sidebar-item icon="bi-times" tab="profile" name="Edit Profile" hidden/>
 {% endblock %}
 {% block panels %}
     <twig:panel id="home" template="/panel/app/home.html.twig" skeleton selected/>
@@ -32,4 +33,5 @@
     <twig:panel id="user" template="/panel/app/user.html.twig" heading="Preferences"/>
     <twig:panel id="vehicle" template="/panel/app/vehicle.html.twig" heading="Vehicle Preferences" skeleton />
     <twig:panel id="driver" template="/panel/app/driver.html.twig" heading="Add/Remove Drivers"/>
+    <twig:panel id="profile" template="/panel/app/profile.html.twig" heading="Edit Profile"/>
 {% endblock %}

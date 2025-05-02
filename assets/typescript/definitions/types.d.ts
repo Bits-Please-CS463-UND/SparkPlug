@@ -51,6 +51,11 @@ interface VehicleData {
     geofence: ?Geofence;
 }
 
+interface ApplicationNotification {
+    title: string;
+    message: string;
+}
+
 interface GPSLocation {
     lat: number;
     lng: number;

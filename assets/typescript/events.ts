@@ -13,3 +13,9 @@ export class EngineStatusChangedEvent extends Event{
         this.running = running;
     }
 }
+
+export class InitFinishedEvent extends Event{
+    constructor(){
+        super('initFinished');
+    }
+}

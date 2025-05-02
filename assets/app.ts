@@ -4,9 +4,12 @@ import './typescript/flashes'
 import './typescript/popover'
 import './typescript/nav'
 import './typescript/map'
+import './typescript/notifications'
+import './typescript/links'
+import './typescript/toggles'
+import './typescript/engine'
 import {PaneStack} from "./typescript/nav";
-import {VehicleChangedEvent} from './typescript/events'
-
+import {InitFinishedEvent, VehicleChangedEvent} from './typescript/events'
 
 declare global {
     interface Window {
@@ -14,6 +17,7 @@ declare global {
         panes: PaneStack;
         vehicles: VehicleData[];
         currentVehicleIndex: number;
+        notifications: ApplicationNotification[];
     }
 }
 
@@ -79,6 +83,29 @@ window.addEventListener('load', () => {
     ]
     window.currentVehicleIndex = 0;
 
+    window.notifications = [
+        {
+            title: "Vehicle Update Available (1)",
+            message: "Update your vehicle to receive the latest security patches."
+        },
+        {
+            title: "Vehicle Update Available (2)",
+            message: "Update your vehicle to receive the latest security patches."
+        },
+        {
+            title: "Vehicle Update Available (3)",
+            message: "Update your vehicle to receive the latest security patches."
+        },
+        {
+            title: "Vehicle Update Available (4)",
+            message: "Update your vehicle to receive the latest security patches."
+        },
+        {
+            title: "Vehicle Update Available (5)",
+            message: "Update your vehicle to receive the latest security patches."
+        }
+    ]
+
     document.querySelectorAll('div.vehicle-selector span.bi-chevron-left, div.vehicle-selector span.bi-chevron-right')
         .forEach((element: Element) => {
             if (element instanceof HTMLSpanElement){
@@ -105,4 +132,5 @@ window.addEventListener('load', () => {
     });
 
     window.dispatchEvent(new VehicleChangedEvent(window.vehicles[0]));
+    window.dispatchEvent(new InitFinishedEvent());
 });

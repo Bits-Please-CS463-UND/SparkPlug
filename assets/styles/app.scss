@@ -101,13 +101,20 @@ div.dt-container div.dt-length select {
     width: calc((100% - 36px )/ 3);
     aspect-ratio: 1;
     background-color: var(--uwu-primary);
-    color: var(--bs-primary-bg-subtle);
+    color: var(--bs-body-bg);
+    border: none;
     overflow: hidden;
     margin: 6px;
     transition: 200ms ease;
 
     &:hover{
-        background-color: var(--uwu-primary-hover)
+        background-color: var(--uwu-primary-hover);
+        color: var(--bs-body-bg);
+    }
+
+    &:active{
+        background-color: var(--uwu-primary-held) !important;
+        color: var(--bs-body-bg) !important;
     }
 
     > svg.bi {
