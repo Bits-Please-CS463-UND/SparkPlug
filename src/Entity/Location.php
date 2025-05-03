@@ -7,7 +7,7 @@ use App\Doctrine\UuidGenerator;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity()]
 class Location
 {
     #[ORM\Id]
@@ -36,4 +36,31 @@ class Location
         precision: 6
     )]
     public float $latitude;
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getLng(): float
+    {
+        return $this->longitude;
+    }
+
+    public function setLng(float $longitude): self
+    {
+        $this->longitude = $longitude;
+        return $this;
+    }
+
+    public function getLat(): float
+    {
+        return $this->latitude;
+    }
+
+    public function setLat(float $latitude): self
+    {
+        $this->latitude = $latitude;
+        return $this;
+    }
 }

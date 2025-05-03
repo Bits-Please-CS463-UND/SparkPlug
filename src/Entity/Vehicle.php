@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Doctrine\UuidGenerator;
+use App\Repository\VehicleRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: App\Repository\VehicleRepository::class)]
+#[ORM\Entity(repositoryClass: VehicleRepository::class)]
 class Vehicle
 {
     #[ORM\Id]
@@ -68,4 +69,10 @@ class Vehicle
         mappedBy: 'vehicle'
     )]
     public Collection $notifications;
+
+    #[ORM\OneToMany(targetEntity: Location::class, mappedBy: 'vehicle')]
+    private Collection $locations;
+
+    #[ORM\OneToOne(targetEntity: Geofence::class, mappedBy: 'vehicle')]
+    private ?Geofence $geofence = null;
 }
