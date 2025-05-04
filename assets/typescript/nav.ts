@@ -75,4 +75,13 @@ window.addEventListener("load", () => {
                 window.panes.setTopPane(e);
         })
     })
+
+    // Initialize backlinks
+    document.querySelectorAll('[data-pane-control="back"]').forEach((e: Element) => {
+        e.addEventListener('click', (event: Event) => {
+            event.preventDefault();
+            if (backButton instanceof HTMLButtonElement)
+                backButton.click();
+        })
+    })
 })

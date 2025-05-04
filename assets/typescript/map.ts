@@ -3,6 +3,7 @@ import {VehicleChangedEvent} from "./events";
 import {showModal} from "./modal";
 
 const defaultZoom = 20;
+const defaultLocation = {lat: 0.0, lng: 0.0};
 const defaultIcon = icon({
     iconUrl: "/img/ralsei.png",
     iconSize: [16 * 6, 9 * 6],
@@ -18,7 +19,7 @@ let geofence: Circle | null = null;
 
 function loadVehicleData(vehicle: VehicleData){
     if (vehicleMap && carLocation && geofence){
-        carLocation.setLatLng(vehicle.currentLocation);
+        carLocation.setLatLng(vehicle.currentLocation ?? defaultLocation);
 
         if (vehicle.geofence){
             if (geofence){
@@ -37,14 +38,14 @@ function loadVehicleData(vehicle: VehicleData){
             geofence = null;
         }
 
-        vehicleMap.setView(vehicle.currentLocation, defaultZoom);
+        vehicleMap.setView(vehicle.currentLocation ?? defaultLocation, vehicle.currentLocation ? defaultZoom : 0);
     } else {
         // Map needs to be initialized
         const mapDiv = document.getElementById('map');
         if (mapDiv){
             vehicleMap = map(mapDiv, {
-                center: vehicle.currentLocation,
-                zoom: defaultZoom,
+                center: vehicle.currentLocation ?? defaultLocation,
+                zoom: vehicle.currentLocation ? defaultZoom : 0,
             })
 
             mapDiv.parentElement?.addEventListener('transitionstart', () => {
@@ -55,10 +56,12 @@ function loadVehicleData(vehicle: VehicleData){
             defaultTileLayer.addTo(vehicleMap);
 
             // Add vehicle marker
-            carLocation = marker(vehicle.currentLocation, {
-                icon: defaultIcon
-            });
-            carLocation.addTo(vehicleMap);
+            if (vehicle.currentLocation){
+                carLocation = marker(vehicle.currentLocation, {
+                    icon: defaultIcon
+                });
+                carLocation.addTo(vehicleMap);
+            }
 
             // Add geofence marker (if relevant)
             if (vehicle.geofence){

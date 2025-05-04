@@ -1,0 +1,15 @@
+<div class="position-absolute top-0 min-vw-100 min-vh-100 bg-body z-3 p-3 pt-6" style="left: 0;">
+    <br><br>
+    <h1 class="pt-6">Login</h1>
+    <form class="pt-2">
+        <div class="row">
+            <div class="form-floating mb-3">
+                <input type="email" name='email' class="form-control" id="profile_email" placeholder="example@und.edu">
+                <label class="ms-2" for="profile_email">Email</label>
+            </div>
+        </div>
+        <button class="btn btn-primary" data-request-path="{{ path('api.v1.login.authenticate') }}" data-request-method="POST">Login</button>
+    </form>
+    <br/>
+    <p>Don't have an account? <a href data-pane-control="sub" data-bs-target="#register_link">Register for one here!</a></p>
+</div>

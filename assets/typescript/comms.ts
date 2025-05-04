@@ -1,5 +1,6 @@
 import {populateModalList, populateModalSecret, redirectOnModalClose, resetModal, showModal} from "./modal";
-import {isHandledResponse, isListResponse, isRedirectResponse, isSecretResponse} from './types'
+import {isHandledResponse, isListResponse, isRedirectResponse, isSecretResponse, isSeedResponse} from './types'
+import {initializeApplication} from "./login";
 
 /**
  * Blanket tool for handling responses from AJAX requests.
@@ -21,6 +22,9 @@ function handleResponse(data: any, hasSucceeded: boolean, statusCode: number){
             redirectOnModalClose(data.url)
         } else if (isSecretResponse(data)){
             populateModalSecret(data.secret);
+        } else if (isSeedResponse(data)){
+            initializeApplication(data.vehicles);
+            return;
         }
         showModal(data.title, data.message);
     } else if (hasSucceeded) {

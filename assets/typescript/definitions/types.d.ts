@@ -46,7 +46,7 @@ interface VehicleData {
     model: string;
     year: number;
     color: string;
-    currentLocation: GPSLocation;
+    currentLocation: ?GPSLocation;
     locationHistory: GPSLocation[];
     geofence: ?Geofence;
 }
@@ -64,4 +64,8 @@ interface GPSLocation {
 interface Geofence {
     radius: number;
     center: GPSLocation;
+}
+
+interface SeedResponse extends HandledResponse {
+    vehicles: vehicleData;
 }

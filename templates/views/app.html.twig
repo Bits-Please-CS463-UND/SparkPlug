@@ -10,7 +10,7 @@
     car app :3
 {% endblock %}
 {% block sidebar %}
-    <twig:sidebar-item icon="bi-house-door-fill" tab="home" name="Home" selected/>
+    <twig:sidebar-item icon="bi-house-door-fill" tab="home" name="Home"/>
     <twig:sidebar-item icon="bi-heart-pulse-fill" tab="diagnostics" name="Diagnostics" />
     <twig:sidebar-item icon="bi-compass-fill" tab="activity" name="GPS and Activity" />
 
@@ -22,9 +22,12 @@
     <twig:sidebar-item icon="bi-times" tab="vehicle" name="Vehicle Preferences" hidden/>
     <twig:sidebar-item icon="bi-times" tab="driver" name="Add/Remove Drivers" hidden/>
     <twig:sidebar-item icon="bi-times" tab="profile" name="Edit Profile" hidden/>
+    <twig:sidebar-item icon="bi-times" tab="register" name="Registration" hidden/>
+    <twig:sidebar-item icon="bi-times" tab="login" name="Login" hidden/>
 {% endblock %}
 {% block panels %}
-    <twig:panel id="home" template="/panel/app/home.html.twig" skeleton selected/>
+    <twig:panel id="login" template="/panel/app/login.html.twig" heading="Login" selected/>
+    <twig:panel id="home" template="/panel/app/home.html.twig" skeleton/>
     <twig:panel id="diagnostics" template="/panel/app/logs.html.twig" heading="Logs & Diagnostics" skeleton/>
     <twig:panel id="activity" template="/panel/app/activity.html.twig" heading="GPS & Activity" skeleton/>
     <twig:panel id="actions" template="/panel/app/actions.html.twig" heading="Actions" />
@@ -34,4 +37,6 @@
     <twig:panel id="vehicle" template="/panel/app/vehicle.html.twig" heading="Vehicle Preferences" skeleton />
     <twig:panel id="driver" template="/panel/app/driver.html.twig" heading="Add/Remove Drivers"/>
     <twig:panel id="profile" template="/panel/app/profile.html.twig" heading="Edit Profile"/>
+    <twig:panel id="register" template="/panel/app/register.html.twig" heading="Registration"/>
+
 {% endblock %}

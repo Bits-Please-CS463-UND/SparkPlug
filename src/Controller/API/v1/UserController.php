@@ -9,15 +9,13 @@ declare(strict_types=1);
 
 namespace App\Controller\API\v1;
 
-use App\Entity\User;
-use App\Entity\Vehicle;
 use App\Repository\UserRepository;
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/v1/vehicle/{vehicleId}/drivers')]
 class UserController extends AbstractController

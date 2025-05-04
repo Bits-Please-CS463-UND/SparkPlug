@@ -12,7 +12,6 @@ window.addEventListener("load", (_e) => {
 
             // Lock out form buttons
             element.querySelectorAll("button.btn").forEach((button) => {
-                debugger;
                 if (button instanceof HTMLButtonElement)
                     button.disabled = true;
             })

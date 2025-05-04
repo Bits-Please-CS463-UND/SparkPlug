@@ -71,11 +71,12 @@ class Vehicle
     )]
     public Collection $notifications;
 
-    #[ORM\OneToMany(targetEntity: Location::class, mappedBy: 'vehicle')]
-    private Collection $locations;
+    #[ORM\JoinTable(name: 'vehicle_locations')]
+    #[ORM\ManyToMany(targetEntity: Location::class)]
+    public Collection $locations;
 
-    #[ORM\OneToOne(targetEntity: Geofence::class, mappedBy: 'vehicle')]
-    private ?Geofence $geofence = null;
+    #[ORM\OneToOne(targetEntity: Geofence::class)]
+    public ?Geofence $geofence = null;
 
     public function __construct(){
         $this->notifications = new ArrayCollection();
