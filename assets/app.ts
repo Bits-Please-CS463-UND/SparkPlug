@@ -9,6 +9,7 @@ import './typescript/links'
 import './typescript/toggles'
 import './typescript/engine'
 import './typescript/login'
+import './typescript/time'
 import {PaneStack} from "./typescript/nav";
 
 declare global {
