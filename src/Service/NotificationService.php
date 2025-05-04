@@ -24,6 +24,11 @@ class NotificationService
         $this->entityManager = $entityManager;
     }
 
+    public function getNotificationsSince(string $vehicleId, \DateTimeInterface $since): array
+    {
+        return $this->notificationRepository->findSinceByVehicle($vehicleId, $since);
+    }
+
     public function getUnseenNotification(string $vehicleId): array
     {
         return $this->notificationRepository->findUnseenByVehicle($vehicleId);

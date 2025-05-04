@@ -24,6 +24,30 @@ class NotificationController extends AbstractController
 
         return $this->json($notifications);
     }
+// update notifs system
+    #[Route(path: '/deterministic', name: 'deterministic', methods: ['GET'])]
+    public function getNotificationsSince(string $vehicleId, Request $request): JsonResponse
+    {
+        $since = $request->query->get('since');
+        $notifications = [];
+
+        if ($since) {
+            try {
+                $sinceDateTime = new \DateTime($since);
+                $notifications = $this->notificationService->getNotificationsSince($vehicleId, $sinceDateTime);
+            } catch (\Exception $e) {
+                return new JsonResponse(['error' => 'Invalid date'], 400);
+            }
+
+            if (empty($notifications)) {
+                return new JsonResponse(null, JsonResponse::HTTP_NOT_MODIFIED);
+            }
+        } else {
+            $notifications = $this->notificationService->getUnseenNotification($vehicleId);
+        }
+
+        return $this->json($notifications);
+    }
 
     #[Route(path: '', name: 'create', methods: ['POST'])]
     public function sendNotification(string $vehicleId, Request $request): JsonResponse

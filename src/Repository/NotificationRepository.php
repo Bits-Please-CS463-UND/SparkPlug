@@ -46,4 +46,18 @@ class NotificationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+//ignore the horrendous function name im crashing out
+    public function findSinceByVehicle(string $vehicleId, \DateTimeInterface $since): array
+    {
+        return $this->createQueryBuilder('n')
+            ->join('n.vehicle', 'v')
+            ->where('v.id = :vehicleId')
+            ->andWhere('n.issuedAt >= :since')
+            ->setParameter('vehicleId', $vehicleId)
+            ->setParameter('since', $since)
+            ->orderBy('n.issuedAt', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }
