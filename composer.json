@@ -79,6 +79,7 @@
     "require-dev": {
         "symfony/maker-bundle": "^1.63",
         "symfony/phpunit-bridge": "^7.2",
+        "symfony/profiler-pack": "^1.0",
         "symfony/test-pack": "^1.1"
     }
 }
