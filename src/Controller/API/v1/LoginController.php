@@ -76,7 +76,7 @@ class LoginController extends AbstractController
         if ($user){
             return new JsonResponse(
                 new HandledResponse(
-                    'Register Error',
+                    'Registration Error',
                     'A user with that email already exists.',
                 )
             );
@@ -92,7 +92,7 @@ class LoginController extends AbstractController
 
         return new JsonResponse(
             new RedirectResponse(
-                'Register Successful!',
+                'Registration Successful!',
                 'You may now log into SparkPlug.',
                 $this->generateUrl('app')
             )

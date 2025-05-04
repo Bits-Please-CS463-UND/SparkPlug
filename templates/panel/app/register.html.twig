@@ -1,33 +1,43 @@
-<div class="position-absolute top-0 min-vw-100 min-vh-100 bg-body z-3 p-3 pt-6" style="left: 0;">
-    <br><br>
-    <h1 class="pt-6">Registration</h1>
-    <form class="pt-2">
-        <div class="row">
-            <div class="form-floating mb-3">
-                <input type="text" name="firstName" class="form-control" id="profile_firstName" placeholder="John">
-                <label class="ms-2" for="profile_firstName">First Name</label>
-            </div>
+<div class="position-absolute top-0 min-vw-100 min-vh-100 bg-body z-3" style="left: 0;">
+    <div class="bg-body-secondary p-3">
+        <br/>
+        <div class="d-flex">
+            <h1 class="pt-3">
+                {{ include('/vector/logo.svg') }}
+                SparkPlug
+            </h1>
+            <h2 class="h1 text-body-secondary flex-grow-1 text-end" style="padding-top: 1.65rem;">Registration</h2>
         </div>
-        <div class="row">
-            <div class="form-floating mb-3">
-                <input type="text" name="lastName" class="form-control" id="profile_lastName" placeholder="Doe">
-                <label class="ms-2" for="profile_lastName">Last Name</label>
+    </div>
+    <div class="p-3">
+        <form class="pt-2">
+            <div class="row">
+                <div class="form-floating mb-3">
+                    <input type="text" name="firstName" class="form-control" id="profile_firstName" placeholder="John">
+                    <label class="ms-2" for="profile_firstName">First Name</label>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="form-floating mb-3">
-                <input type="email" name="email" class="form-control" id="profile_email" placeholder="example@und.edu">
-                <label class="ms-2" for="profile_email">Email</label>
+            <div class="row">
+                <div class="form-floating mb-3">
+                    <input type="text" name="lastName" class="form-control" id="profile_lastName" placeholder="Doe">
+                    <label class="ms-2" for="profile_lastName">Last Name</label>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="form-floating mb-3">
-                <input type="tel" name="phoneNum" class="form-control" id="profile_phone" placeholder="(701) 777-2222">
-                <label class="ms-2" for="profile_phone">Phone Number</label>
+            <div class="row">
+                <div class="form-floating mb-3">
+                    <input type="email" name="email" class="form-control" id="profile_email" placeholder="example@und.edu">
+                    <label class="ms-2" for="profile_email">Email</label>
+                </div>
             </div>
-        </div>
-        <button class="btn btn-primary" data-request-path="{{ path('api.v1.login.register') }}" data-request-method="POST">Register</button>
-    </form>
-    <br/>
-    <p>Already have an account? <a href data-pane-control="back">Return to Login</a></p>
+            <div class="row">
+                <div class="form-floating mb-3">
+                    <input type="tel" name="phoneNum" class="form-control" id="profile_phone" placeholder="(701) 777-2222">
+                    <label class="ms-2" for="profile_phone">Phone Number</label>
+                </div>
+            </div>
+            <button class="btn btn-primary" data-request-path="{{ path('api.v1.login.register') }}" data-request-method="POST">Register</button>
+        </form>
+        <br/>
+        <p>Already have an account? <a href data-pane-control="back">Return to Login</a></p>
+    </div>
 </div>
