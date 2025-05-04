@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use App\Doctrine\UuidGenerator;
 use App\Repository\VehicleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -75,4 +76,10 @@ class Vehicle
 
     #[ORM\OneToOne(targetEntity: Geofence::class, mappedBy: 'vehicle')]
     private ?Geofence $geofence = null;
+
+    public function __construct(){
+        $this->notifications = new ArrayCollection();
+        $this->locations = new ArrayCollection();
+        $this->drivers = new ArrayCollection();
+    }
 }
