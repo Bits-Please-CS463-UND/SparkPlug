@@ -14,6 +14,7 @@ Encore
     .enableTypeScriptLoader()
     .addEntry('app', './assets/app.ts')
     .addEntry('common', './assets/common.ts')
+    .addEntry('location', './assets/location.ts')
 
     // A JS stub is used for SCSS compilation
     .enableSassLoader()

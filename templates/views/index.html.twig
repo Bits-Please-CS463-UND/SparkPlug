@@ -24,6 +24,19 @@
                 <strong>Debug Panel: </strong>
                 <a href="{{ path('debug_panel') }}">Open Debug Panel</a>
             </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-auto">
+                        <strong>Create Location History:</strong>
+                    </div>
+                    <div class="col-auto">
+                        <input class="form-control" aria-label="vehicle_id" placeholder="Vehicle ID" onchange="document.getElementById('vehicle_location_link').href = '{{ path('bosshog', {vehicle: "_default_"}) }}'.replace('_default_', this.value)"/>
+                    </div>
+                    <div class="col-auto">
+                        <a class="btn btn-primary" id="vehicle_location_link">GO</a>
+                    </div>
+                </div>
+            </li>
         </ul>
     </div>
 {% endblock %}

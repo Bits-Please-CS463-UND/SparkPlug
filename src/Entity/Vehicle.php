@@ -73,6 +73,7 @@ class Vehicle
 
     #[ORM\JoinTable(name: 'vehicle_locations')]
     #[ORM\ManyToMany(targetEntity: Location::class)]
+    #[ORM\OrderBy(['createdAt' => 'DESC'])]
     public Collection $locations;
 
     #[ORM\OneToOne(targetEntity: Geofence::class)]

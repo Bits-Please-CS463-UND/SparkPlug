@@ -1,0 +1,21 @@
+{% extends "/layouts/base.html.twig" %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('location') }}
+{% endblock %}
+{% block body %}
+    <h1 class="mb-4">Debug Location</h1>
+    <p><strong>Current Vehicle:</strong> {{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</p>
+    <script>
+        window.locations = [
+            {% for l in vehicle.locations %}
+            {
+                lat: {{ l.latitude }},
+                lng: {{ l.longitude }},
+            },
+            {% endfor %}
+        ];
+        window.endpointURL = '{{ path('api.v1.vehicle.location.set_current', {vehicleId: vehicle.id}) }}';
+    </script>
+    <div id="map" style="width: 600px; height: 600px;"></div>
+{% endblock %}

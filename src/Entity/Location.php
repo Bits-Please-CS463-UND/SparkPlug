@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Doctrine\UuidGenerator;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -36,6 +38,15 @@ class Location
         precision: 6
     )]
     public float $latitude;
+
+    #[ORM\Column(
+        type: Types::DATETIME_IMMUTABLE,
+    )]
+    public DateTimeInterface $createdAt;
+
+    public function __construct(){
+        $this->createdAt = new DateTimeImmutable();
+    }
 
     public function getId(): string
     {

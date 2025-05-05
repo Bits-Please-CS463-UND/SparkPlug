@@ -5,6 +5,7 @@ namespace App\Service;
 
 use App\Entity\Location;
 use App\Entity\Geofence;
+use App\Entity\Vehicle;
 use App\Repository\VehicleRepository;
 use App\Repository\LocationRepository;
 use App\Repository\GeofenceRepository;
@@ -38,13 +39,15 @@ class LocationService
     public function setCurrentLocation(string $vehicleId, float $lat, float $lng): Location
     {
         $vehicle = $this->vehicleRepository->find($vehicleId);
-        if (!$vehicle) {
+        if (!$vehicle instanceof Vehicle) {
             throw new \InvalidArgumentException('Vehicle not found.');
         }
 
         $location = new Location();
         $location->setLat($lat);
         $location->setLng($lng);
+
+        $vehicle->locations->add($location);
 
         $this->entityManager->persist($location);
         $this->entityManager->flush();
