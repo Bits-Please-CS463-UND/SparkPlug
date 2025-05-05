@@ -1,0 +1,22 @@
+<twig:periphery:header-auth>
+    <p>
+        Welcome to SparkPlug! To finish your registration, you'll need to add your vehicle to your account. Fill
+        in your vehicle's data below.
+    </p>
+    <form class="pt-2">
+        <twig:field:input name="make">Make</twig:field:input>
+        <twig:field:input name="model">Model</twig:field:input>
+        <twig:field:input name="year" type="number">Year</twig:field:input>
+        <twig:field:select name="color" label="Color">
+            <option value="#2d2f30" selected>Charcoal</option>
+            <option value="#661515">Maroon</option>
+            <option value="#5e412f">Cocoa</option>
+            <option value="#5b7233">Olive</option>
+            <option value="#335272">Denim</option>
+            <option value="#3d3372">Indigo</option>
+        </twig:field:select>
+        <twig:field:input name="vin">Vehicle Identification Number (VIN)</twig:field:input>
+        <twig:field:input name="licensePlates">License Plates</twig:field:input>
+        <button class="btn btn-primary" data-request-method="POST">Add Vehicle</button>
+    </form>
+</twig:periphery:header-auth>

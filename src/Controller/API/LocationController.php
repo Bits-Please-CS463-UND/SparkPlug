@@ -6,7 +6,7 @@ namespace App\Controller\API;
 use App\Service\LocationService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route(path: '/api/v1/vehicle/{vehicleId}/location', name: 'api.v1.vehicle.location.')]

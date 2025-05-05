@@ -1,0 +1,8 @@
+<twig:periphery:header-auth>
+    <form class="pt-2">
+        <twig:field:input name="email" type="email">Email</twig:field:input>
+        <button class="btn btn-primary" data-request-path="{{ path('api.v1.login.authenticate') }}" data-request-method="POST">Login</button>
+    </form>
+    <br/>
+    <p>Don't have an account? <a href data-pane-control="sub" data-bs-target="#register_link">Register for one here!</a></p>
+</twig:periphery:header-auth>

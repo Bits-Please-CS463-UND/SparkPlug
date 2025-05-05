@@ -1,0 +1,11 @@
+<twig:periphery:header-auth>
+    <form class="pt-2">
+        <twig:field:input name="firstName">First Name</twig:field:input>
+        <twig:field:input name="lastName">Last Name</twig:field:input>
+        <twig:field:input name="email" type="email">Email</twig:field:input>
+        <twig:field:input name="phoneNum" type="tel">Phone Number</twig:field:input>
+        <button class="btn btn-primary" data-request-path="{{ path('api.v1.login.register') }}" data-request-method="POST">Register</button>
+    </form>
+    <br/>
+    <p>Already have an account? <a href data-pane-control="back">Return to Login</a></p>
+</twig:periphery:header-auth>

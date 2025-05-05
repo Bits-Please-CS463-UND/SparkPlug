@@ -1,0 +1,16 @@
+<div class="position-absolute top-0 min-vw-100 min-vh-100 bg-body z-3" style="left: 0;">
+    <div class="bg-body-secondary p-3">
+        <br/>
+        <div class="d-flex">
+            <h1 class="pt-3">
+                {{ include('/vector/logo.svg') }}
+                SparkPlug
+            </h1>
+            <h2 class="h1 text-body-secondary flex-grow-1 text-end" style="padding-top: 1.65rem;">{{ heading }}</h2>
+        </div>
+    </div>
+    <div class="p-3">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>

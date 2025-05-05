@@ -19,42 +19,58 @@ use Symfony\Component\HttpKernel\Attribute\ValueResolver;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(
-    path: '/api/v1/login',
-    name: 'api.v1.login'
+    path: '/api/v1/onboarding',
+    name: 'api.v1.onboarding'
 )]
-class LoginController extends AbstractController
+class OnboardingController extends AbstractController
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
+        private UserRepository $userRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly SeedService $seedService,
     ) {}
     #[Route(
-        path: '/authenticate',
-        name: '.authenticate',
+        path: '/{user}',
+        name: '.submit',
         methods: 'POST',
         format: 'json'
     )]
-    public function authenticate(
-        #[ValueResolver(JsonNamedValueResolver::class)] ?string $email
+    public function submit(
+        User $user,
+        #[ValueResolver(JsonNamedValueResolver::class)] ?string $make,
+        #[ValueResolver(JsonNamedValueResolver::class)] ?string $model,
+        #[ValueResolver(JsonNamedValueResolver::class)] ?int $year,
+        #[ValueResolver(JsonNamedValueResolver::class)] ?string $color,
+        #[ValueResolver(JsonNamedValueResolver::class)] ?string $vin,
+        #[ValueResolver(JsonNamedValueResolver::class)] ?string $licensePlates,
     ): JsonResponse{
-        $user = $this->userRepository->findOneByEmail($email);
-        if ($user){
-            return new JsonResponse(
-                $this->seedService->generate($user)
-            );
-        }
+        // Fill in vehicle details
+        $vehicle = new Vehicle();
+        $vehicle->make = $make;
+        $vehicle->model = $model;
+        $vehicle->year = $year;
+        $vehicle->color = $color;
+        $vehicle->vin = $vin;
+        $vehicle->licensePlates = $licensePlates;
+        $vehicle->owner = $user;
 
+        // Add association to owner
+        $vehicle->drivers->add($user);
+        $user->ownedVehicles->add($vehicle);
+        $user->sharedVehicles->add($vehicle);
+
+        // Write out
+        $this->entityManager->persist($vehicle);
+        $this->entityManager->flush();
+
+        // Return a seed
         return new JsonResponse(
-            new HandledResponse(
-                'Login Error',
-                'You could not be logged in.',
-            )
+            $this->seedService->generate($user)
         );
     }
 
     #[Route(
-        path: '/register',
+        path: 'register',
         name: '.register',
         methods: 'POST',
         format: 'json'

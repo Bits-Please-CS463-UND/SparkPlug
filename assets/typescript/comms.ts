@@ -23,7 +23,7 @@ function handleResponse(data: any, hasSucceeded: boolean, statusCode: number){
         } else if (isSecretResponse(data)){
             populateModalSecret(data.secret);
         } else if (isSeedResponse(data)){
-            initializeApplication(data.vehicles);
+            initializeApplication(data);
             return;
         }
         showModal(data.title, data.message);

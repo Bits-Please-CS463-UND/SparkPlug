@@ -6,70 +6,85 @@ function setVehicleName(name: string){
             value.innerText = name;
     })
 }
-export function initializeApplication(vehicleData: VehicleData[]){
-    window.vehicles = vehicleData;
+export function initializeApplication(seed: SeedResponse){
+    window.vehicles = seed.vehicles;
+    window.profile = seed.profile;
 
-    const header = document.getElementById('header');
-    const navbar = document.getElementById('navbar');
+    if (!window.vehicles.length){
+        // The user has no vehicles. Make them add one!
 
-    if (header instanceof HTMLElement && navbar instanceof HTMLElement){
-        header.style.display = 'flex';
-        navbar.style.display = 'flex';
-    }
-    window.currentVehicleIndex = 0;
+        // We'll need to set the onboarding link's user ID. That's easy enough.
+        const onboardingSubmissionButton = document.getElementById('onboarding')?.querySelector('button');
+        if (onboardingSubmissionButton instanceof HTMLButtonElement)
+            onboardingSubmissionButton.setAttribute('data-request-path', `/api/v1/onboarding/${window.profile.id}`);
 
-    window.notifications = [
-        {
-            title: "Vehicle Update Available (1)",
-            message: "Update your vehicle to receive the latest security patches."
-        },
-        {
-            title: "Vehicle Update Available (2)",
-            message: "Update your vehicle to receive the latest security patches."
-        },
-        {
-            title: "Vehicle Update Available (3)",
-            message: "Update your vehicle to receive the latest security patches."
-        },
-        {
-            title: "Vehicle Update Available (4)",
-            message: "Update your vehicle to receive the latest security patches."
-        },
-        {
-            title: "Vehicle Update Available (5)",
-            message: "Update your vehicle to receive the latest security patches."
+        // Focus the panel.
+        const onboardingLink = document.getElementById('onboarding_link');
+        if (onboardingLink instanceof HTMLButtonElement)
+            window.panes.setTopPane(onboardingLink);
+    } else {
+        const header = document.getElementById('header');
+        const navbar = document.getElementById('navbar');
+
+        if (header instanceof HTMLElement && navbar instanceof HTMLElement){
+            header.style.display = 'flex';
+            navbar.style.display = 'flex';
         }
-    ]
+        window.currentVehicleIndex = 0;
 
-    document.querySelectorAll('div.vehicle-selector span.bi-chevron-left, div.vehicle-selector span.bi-chevron-right')
-        .forEach((element: Element) => {
-            if (element instanceof HTMLSpanElement){
-                element.addEventListener('click', (e) => {
-                    if (element.classList.contains('bi-chevron-left')){
-                        window.currentVehicleIndex = (window.currentVehicleIndex - 1 + window.vehicles.length) % window.vehicles.length
-                    } else {
-                        window.currentVehicleIndex = (window.currentVehicleIndex + 1) % window.vehicles.length
-                    }
-
-                    window.dispatchEvent(new VehicleChangedEvent(window.vehicles[window.currentVehicleIndex]))
-                });
+        window.notifications = [
+            {
+                title: "Vehicle Update Available (1)",
+                message: "Update your vehicle to receive the latest security patches."
+            },
+            {
+                title: "Vehicle Update Available (2)",
+                message: "Update your vehicle to receive the latest security patches."
+            },
+            {
+                title: "Vehicle Update Available (3)",
+                message: "Update your vehicle to receive the latest security patches."
+            },
+            {
+                title: "Vehicle Update Available (4)",
+                message: "Update your vehicle to receive the latest security patches."
+            },
+            {
+                title: "Vehicle Update Available (5)",
+                message: "Update your vehicle to receive the latest security patches."
             }
-        })
+        ]
 
-    window.addEventListener('vehicleChanged', (e: Event) => {
-        if (e instanceof VehicleChangedEvent){
-            // Update vehicle name everywhere
-            setVehicleName(`${e.vehicle.year} ${e.vehicle.make} ${e.vehicle.model}`);
+        document.querySelectorAll('div.vehicle-selector span.bi-chevron-left, div.vehicle-selector span.bi-chevron-right')
+            .forEach((element: Element) => {
+                if (element instanceof HTMLSpanElement){
+                    element.addEventListener('click', (e) => {
+                        if (element.classList.contains('bi-chevron-left')){
+                            window.currentVehicleIndex = (window.currentVehicleIndex - 1 + window.vehicles.length) % window.vehicles.length
+                        } else {
+                            window.currentVehicleIndex = (window.currentVehicleIndex + 1) % window.vehicles.length
+                        }
 
-            // Set theme color
-            document.documentElement.style.setProperty("--uwu-primary", e.vehicle.color);
-        }
-    });
+                        window.dispatchEvent(new VehicleChangedEvent(window.vehicles[window.currentVehicleIndex]))
+                    });
+                }
+            })
 
-    window.dispatchEvent(new VehicleChangedEvent(window.vehicles[0]));
-    window.dispatchEvent(new InitFinishedEvent());
+        window.addEventListener('vehicleChanged', (e: Event) => {
+            if (e instanceof VehicleChangedEvent){
+                // Update vehicle name everywhere
+                setVehicleName(`${e.vehicle.year} ${e.vehicle.make} ${e.vehicle.model}`);
 
-    const homePane = document.querySelector('[data-bs-target="#home"]');
-    if (homePane instanceof HTMLButtonElement)
-        window.panes.setTopPane(homePane);
+                // Set theme color
+                document.documentElement.style.setProperty("--uwu-primary", e.vehicle.color);
+            }
+        });
+
+        window.dispatchEvent(new VehicleChangedEvent(window.vehicles[0]));
+        window.dispatchEvent(new InitFinishedEvent());
+
+        const homePane = document.querySelector('[data-bs-target="#home"]');
+        if (homePane instanceof HTMLButtonElement)
+            window.panes.setTopPane(homePane);
+    }
 }

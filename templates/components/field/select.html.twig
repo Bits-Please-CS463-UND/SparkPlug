@@ -1,0 +1,7 @@
+{% set id = 'field_' ~ random() %}
+<div class="form-floating mb-3">
+    <select name='{{ name }}' class="form-control" id="{{ id }}">
+        {% block content %}{% endblock %}
+    </select>
+    <label for="{{ id }}">{{ label }}</label>
+</div>

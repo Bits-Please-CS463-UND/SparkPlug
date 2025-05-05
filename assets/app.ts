@@ -19,6 +19,7 @@ declare global {
         vehicles: VehicleData[];
         currentVehicleIndex: number;
         notifications: ApplicationNotification[];
+        profile: User;
     }
 }
 

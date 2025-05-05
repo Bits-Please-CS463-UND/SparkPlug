@@ -51,6 +51,14 @@ interface VehicleData {
     geofence: ?Geofence;
 }
 
+interface User {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNum: string;
+}
+
 interface ApplicationNotification {
     title: string;
     message: string;
@@ -68,4 +76,5 @@ interface Geofence {
 
 interface SeedResponse extends HandledResponse {
     vehicles: vehicleData;
+    profile: User;
 }

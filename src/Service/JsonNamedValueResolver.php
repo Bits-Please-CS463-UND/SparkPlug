@@ -21,6 +21,6 @@ class JsonNamedValueResolver implements ValueResolverInterface
             return [null];
         }
 
-        return [$json->$key];
+        return [settype($json->$key, $argument->getType()) ? $json->$key : null];
     }
 }
