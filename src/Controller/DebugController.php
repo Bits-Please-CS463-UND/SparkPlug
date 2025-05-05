@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class DebugController extends AbstractController
 {
@@ -21,7 +21,7 @@ class DebugController extends AbstractController
             :'No Logs Available. '
             ];
         
-        return $this->render('panel/app/panel.html.twig',
+        return $this->render('views/debug.html.twig',
         ['debug'=>$debug]);
     }
 }

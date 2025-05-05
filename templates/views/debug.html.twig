@@ -1,0 +1,28 @@
+{% extends "/layouts/base.html.twig" %}
+{% block body %}
+        <h1 class="mb-4"> Debug Panel </h1>
+
+        {#First card: system/environment info #}
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                System info
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>PHP Version: </strong>{{debug.php_version}}</li>
+                <li class="list-group-item"><strong>Symfony Version: </strong>{{debug.symfony_version}}</li>
+                <li class="list-group-item"><strong>Environment: </strong>{{debug.env}}</li>
+            </ul>
+        </div>
+
+        {#Second card: log output#}
+
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                Application Logs
+            </div>
+            <div class="card-body bg-black text-light"
+            style="white-space:pre-wrap; font-family: monospace;">
+            {{debug.log|e}}
+            </div>
+        </div>
+{% endblock %}

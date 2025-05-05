@@ -1,12 +1,29 @@
 {% extends "/layouts/base.html.twig" %}
 {% block body %}
-    <a href="#" onclick="window.open('{{ path('app') }}','targetWindow',
-    `toolbar=no,
-    location=no,
-    status=no,
-    menubar=no,
-    scrollbars=yes,
-    resizable=no,
-    width=640,
-    height=920`);">Launch Simulator</a>
+    <h1 class="mb-4">SparkPlug Developer Home</h1>
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            Tools
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <strong>Device Simulator: </strong>
+                <a href="#" onclick="window.open('{{ path('app') }}','targetWindow',
+                        `toolbar=no,
+                        location=no,
+                        status=no,
+                        menubar=no,
+                        scrollbars=yes,
+                        resizable=no,
+                        width=640,
+                        height=920`);">
+                    Launch Simulator
+                </a>
+            </li>
+            <li class="list-group-item">
+                <strong>Debug Panel: </strong>
+                <a href="{{ path('debug_panel') }}">Open Debug Panel</a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}
