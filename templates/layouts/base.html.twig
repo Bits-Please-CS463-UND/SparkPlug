@@ -29,6 +29,8 @@
         </script>
 
         {% block javascripts %}
+            <!-- Common JS is imported here. If more entrypoints are needed, the block can be overridden or appended to. -->
+            {{ encore_entry_script_tags('common') }}
         {% endblock %}
     </head>
 

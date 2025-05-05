@@ -1,16 +1,12 @@
-import './typescript/forms'
-import './typescript/modal'
-import './typescript/flashes'
-import './typescript/popover'
-import './typescript/nav'
-import './typescript/map'
-import './typescript/notifications'
-import './typescript/links'
-import './typescript/toggles'
-import './typescript/engine'
-import './typescript/login'
-import './typescript/time'
-import {PaneStack} from "./typescript/nav";
+import './typescript/app/nav'
+import './typescript/app/map'
+import './typescript/app/notifications'
+import './typescript/app/links'
+import './typescript/app/toggles'
+import './typescript/app/engine'
+import './typescript/app/login'
+import './typescript/app/time'
+import {PaneStack} from "./typescript/app/nav";
 
 declare global {
     interface Window {
@@ -22,21 +18,6 @@ declare global {
         profile: User;
     }
 }
-
-// Light/Dark mode management
-const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-function setColorScheme(query: Event|MediaQueryList){
-    if (query instanceof Event)
-        query = <MediaQueryList>query.target;
-
-    document.documentElement.dataset.bsTheme =
-        query.matches ?
-            "dark" : "light";
-}
-
-setColorScheme(colorScheme);
-colorScheme.addEventListener('change', setColorScheme);
 
 window.addEventListener('load', () => {
     const loginButton = document.getElementById('login_link');

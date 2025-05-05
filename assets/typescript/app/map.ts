@@ -1,6 +1,6 @@
 import { map, Map, latLng, tileLayer, MapOptions, marker, Marker, circle, Circle, icon, popup } from "leaflet";
 import {VehicleChangedEvent} from "./events";
-import {showModal} from "./modal";
+import {showModal} from "../common/modal";
 
 const defaultZoom = 20;
 const defaultLocation = {lat: 0.0, lng: 0.0};

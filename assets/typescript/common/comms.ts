@@ -1,6 +1,6 @@
 import {populateModalList, populateModalSecret, redirectOnModalClose, resetModal, showModal} from "./modal";
 import {isHandledResponse, isListResponse, isRedirectResponse, isSecretResponse, isSeedResponse} from './types'
-import {initializeApplication} from "./login";
+import {initializeApplication} from "../app/login";
 
 /**
  * Blanket tool for handling responses from AJAX requests.

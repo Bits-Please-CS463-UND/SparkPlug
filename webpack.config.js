@@ -10,20 +10,14 @@ Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
 
-    /*
-     * ENTRY CONFIG
-     *
-     * Each entry will result in one JavaScript file (e.g. app.js)
-     * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
-     */
-    .addEntry('app', './assets/app.ts')
+    // All scripts should be in TypeScript
     .enableTypeScriptLoader()
+    .addEntry('app', './assets/app.ts')
+    .addEntry('common', './assets/common.ts')
 
-    .addEntry('styles', './assets/styles.js')
+    // A JS stub is used for SCSS compilation
     .enableSassLoader()
-
-    .splitEntryChunks()
-    .enableSingleRuntimeChunk()
+    .addEntry('styles', './assets/styles.js')
 
     /*
      * FEATURE CONFIG
@@ -32,10 +26,11 @@ Encore
      * list of features, see:
      * https://symfony.com/doc/current/frontend.html#adding-more-features
      */
+    .splitEntryChunks()
+    .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
-    // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(true);
 
 

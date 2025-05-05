@@ -1,5 +1,5 @@
 import {InitFinishedEvent} from "./events";
-import {populateModalConfirm, showModal, resetModal, redirectOnModalClose} from "./modal";
+import {populateModalConfirm, showModal, resetModal, redirectOnModalClose} from "../common/modal";
 
 function deleteVehicle(){
     resetModal();
