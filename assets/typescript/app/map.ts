@@ -1,137 +1,122 @@
-import { map, Map, latLng, tileLayer, MapOptions, marker, Marker, circle, Circle, icon, popup } from "leaflet";
+import {Map, Marker, circle, Circle, popup} from "leaflet";
 import {VehicleChangedEvent} from "./events";
-import {showModal} from "../common/modal";
+import {addPointToMap, initializeMap} from "../common/map";
+import {resetModal, showModal} from "../common/modal";
 
 const defaultZoom = 20;
-const defaultLocation = {lat: 0.0, lng: 0.0};
-const defaultIcon = icon({
-    iconUrl: "/img/ralsei.png",
-    iconSize: [16 * 6, 9 * 6],
-    iconAnchor: [16 * 3, 9 * 6],
-});
-const defaultTileLayer = tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-})
 let vehicleMap: Map | null = null;
-let carLocation: Marker | null = null;
 let geofence: Circle | null = null;
 
-function loadVehicleData(vehicle: VehicleData){
-    if (vehicleMap && carLocation && geofence){
-        carLocation.setLatLng(vehicle.currentLocation ?? defaultLocation);
+function resetMap(): Map{
+    if (vehicleMap instanceof Map){
+        vehicleMap.off();
+        vehicleMap.remove();
+    }
+    geofence = null;
 
-        if (vehicle.geofence){
-            if (geofence){
-                geofence.setLatLng(vehicle.geofence.center);
-                geofence.setRadius(vehicle.geofence.radius);
-            } else {
-                geofence = circle([vehicle.geofence.center.lat, vehicle.geofence.center.lng], {
-                    fillOpacity: 0.15,
-                    radius: vehicle.geofence.radius,
-                    color: 'var(--uwu-primary)',
-                    fillColor: 'var(--uwu-primary)'
-                });
-                geofence.addTo(vehicleMap)
-            }
-        } else {
-            geofence = null;
-        }
+    const mapDiv = document.getElementById('map');
+    return initializeMap(mapDiv, mapDiv?.parentElement?.parentElement);
+}
 
-        vehicleMap.setView(vehicle.currentLocation ?? defaultLocation, vehicle.currentLocation ? defaultZoom : 0);
-    } else {
-        // Map needs to be initialized
-        const mapDiv = document.getElementById('map');
-        if (mapDiv){
-            vehicleMap = map(mapDiv, {
-                center: vehicle.currentLocation ?? defaultLocation,
-                zoom: vehicle.currentLocation ? defaultZoom : 0,
-            })
+function loadVehicleData(map: Map, vehicle: VehicleData){
+    // Set map options
+    if (vehicle.currentLocation){
+        map.setView(vehicle.currentLocation, defaultZoom)
+    }
 
-            mapDiv.parentElement?.addEventListener('transitionstart', () => {
-                vehicleMap?.invalidateSize();
-            });
+    // Add points to map
+    const working: GPSLocation[] = [];
+    vehicle.locationHistory.reverse().forEach((l: GPSLocation) => {
+        addPointToMap(map, l, working);
+    })
 
-            // Add OSM Tile Layer
-            defaultTileLayer.addTo(vehicleMap);
+    // Set geofence if applicable
+    if (vehicle.geofence){
+        geofence = circle(vehicle.geofence.center, {
+            fillOpacity: 0.15,
+            radius: vehicle.geofence.radius,
+            color: 'var(--uwu-primary)',
+            fillColor: 'var(--uwu-primary)'
+        });
+        geofence.addTo(map);
+    }
 
-            // Add vehicle marker
-            if (vehicle.currentLocation){
-                carLocation = marker(vehicle.currentLocation, {
-                    icon: defaultIcon
-                });
-                carLocation.addTo(vehicleMap);
-            }
+    // Add geofence popper
+    const popper = popup()
+    map.on('click', (e) => {
+        popper.setLatLng(e.latlng);
+        popper.setContent(
+            "<form id='geofence_form'>" +
+            "   <input class='visually-hidden' name='lat' value='" + e.latlng.lat + "'>" +
+            "   <input class='visually-hidden' name='lng' value='" + e.latlng.lng + "'>" +
+            "   <b>Set Geofence to This Place?</b>" +
+            "   </br>" +
+            "   <br/>" +
+            "   <div class='form-floating'>" +
+            "       <input class='form-control' id='geofence_radius' type='number' name='radius'>" +
+            "       <label class='form-label' for='geofence_radius'>Radius (Meters)</label>" +
+            "   </div>" +
+            "   </br>" +
+            "   <button class='btn btn-primary' type='submit'>Set</button>" +
+            "</form>"
+        );
+        popper.openOn(map);
 
-            // Add geofence marker (if relevant)
-            if (vehicle.geofence){
-                geofence = circle([vehicle.geofence.center.lat, vehicle.geofence.center.lng], {
-                    color: 'var(--uwu-primary)',
-                    fillColor: 'var(--uwu-primary)',
-                    fillOpacity: 0.15,
-                    radius: vehicle.geofence.radius
-                });
+        const popperForm = document.getElementById('geofence_form');
+        if (popperForm && popperForm instanceof HTMLFormElement){
+            popperForm.addEventListener('submit', (e) => {
+                e.preventDefault();
 
-                geofence.addTo(vehicleMap)
-            }
+                // Pull form values in a very demure and mindful manner 🙏
+                const formData = new FormData(popperForm)
+                const radius = parseInt(formData.get('radius')?.toString() ?? "0") ?? 0;
+                const lat = parseFloat(formData.get('lat')?.toString() ?? "0.0") ?? 0.0;
+                const lng = parseFloat(formData.get('lng')?.toString() ?? "0.0") ?? 0.0;
 
-            // Add popper
-            const popper = popup()
-            vehicleMap.on('click', (e) => {
-                if (vehicleMap && geofence){
-                    popper.setLatLng(e.latlng)
-                        .setContent("<form id='geofence_form'>" +
-                            "<input class='visually-hidden' name='lat' value='" + e.latlng.lat + "'>" +
-                            "<input class='visually-hidden' name='lng' value='" + e.latlng.lng + "'>" +
-                            "<b>Set Geofence to This Place?</b></br><br/>" +
-                            "<div class='form-floating'>" +
-                            "<input class='form-control' id='geofence_radius' type='number' name='radius'>" +
-                            "<label class='form-label' for='geofence_radius'>Radius (Meters)</label>" +
-                            "</div></br>" +
-                            "<button class='btn btn-primary' type='submit'>Set</button>" +
-                            "</form>")
-                        .openOn(vehicleMap);
-
-                    const popperForm = document.getElementById('geofence_form');
-                    if (popperForm && popperForm instanceof HTMLFormElement){
-                        popperForm.addEventListener('submit', (e) => {
-                            e.preventDefault();
-
-                            // Pull form values in a very demure and mindful manner 🙏
-                            const formData = new FormData(popperForm)
-                            const radius = parseInt(formData.get('radius')?.toString() ?? "0") ?? 0;
-                            const lat = parseFloat(formData.get('lat')?.toString() ?? "0.0") ?? 0.0;
-                            const lng = parseFloat(formData.get('lng')?.toString() ?? "0.0") ?? 0.0;
-
-                            // Get current vehicle
-                            const currentVehicle = window.vehicles[window.currentVehicleIndex];
-
-                            if (!geofence){
-                                geofence = circle([lat, lng], {
-                                    color: 'var(--uwu-primary)',
-                                    fillColor: 'var(--uwu-primary)',
-                                    fillOpacity: 0.15,
-                                    radius: radius
-                                });
-                            } else {
-                                geofence.setRadius(radius)
-                                geofence.setLatLng([lat, lng])
-                            }
-
-                            // TODO: Post to radius update endpoint
-                            popper.close()
+                fetch(
+                    `/api/v1/vehicle/${vehicle.id}/location/geofence`,
+                    {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            lat: lat,
+                            lng: lng,
+                            radius: radius
                         })
                     }
-                }
-            })
-        } else {
-            showModal('Fatal Error', 'Vehicle map could not be initialized.');
-        }
+                ).then(() => {
+                    vehicle.geofence = {
+                        radius: radius,
+                        center: {
+                            lat: lat,
+                            lng: lng
+                        }
+                    }
 
-    }
+                    if (!geofence){
+                        geofence = circle([lat, lng], {
+                            color: 'var(--uwu-primary)',
+                            fillColor: 'var(--uwu-primary)',
+                            fillOpacity: 0.15,
+                            radius: radius
+                        });
+                        geofence.addTo(map);
+                    } else {
+                        geofence.setRadius(radius);
+                        geofence.setLatLng([lat, lng]);
+                    }
+                }).catch(() => {
+                    resetModal();
+                    showModal('Fatal Error', "Couldn't write geofence to server.....");
+                })
+                popper.close();
+            });
+        }
+    });
 }
 
 window.addEventListener('vehicleChanged', (e) => {
-    if (e instanceof VehicleChangedEvent)
-        loadVehicleData(e.vehicle);
+    if (e instanceof VehicleChangedEvent){
+        vehicleMap = resetMap();
+        loadVehicleData(vehicleMap, e.vehicle);
+    }
 })

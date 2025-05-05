@@ -42,6 +42,7 @@ interface Flash {
  * Just all the [redacted] [redacted]. who cares!
  */
 interface VehicleData {
+    id: string;
     make: string;
     model: string;
     year: number;

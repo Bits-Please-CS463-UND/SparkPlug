@@ -80,6 +80,7 @@ class LocationService
         $geofence->setLat($lat);
         $geofence->setLng($lng);
         $geofence->setRadius($radius);
+        $geofence->setVehicle($vehicle);
 
         $this->entityManager->persist($geofence);
         $this->entityManager->flush();
