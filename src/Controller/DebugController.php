@@ -24,4 +24,14 @@ class DebugController extends AbstractController
         return $this->render('views/debug.html.twig',
         ['debug'=>$debug]);
     }
+
+    #[Route(
+        path: "/notifications",
+        name: "notifications",
+        methods: ["GET"]
+    )]
+    #[Template(
+        template: "/views/vehicle_not.html.twig"
+    )]
+    public function root(){}
 }

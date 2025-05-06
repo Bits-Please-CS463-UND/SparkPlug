@@ -1,0 +1,12 @@
+{% extends "/layouts/base.html.twig" %}
+{% block body %}
+        <h1 class="mb-4"> Debug Panel </h1>
+
+        <form class="pt-2">
+            <twig:field:input name="firstName">First Name</twig:field:input>
+            <twig:field:input name="lastName">Last Name</twig:field:input>
+            <twig:field:input name="email" type="email">Email</twig:field:input>
+            <twig:field:input name="phoneNum" type="tel">Phone Number</twig:field:input>
+            <button class="btn btn-primary" data-request-path="{{ path('api.v1.login.register') }}" data-request-method="POST">Register</button>
+        </form>
+{% endblock %}
