@@ -20,6 +20,18 @@ body {
     box-shadow: none;
 }
 
+.btn.btn-primary {
+    color: white;
+
+    &:active {
+        color: white;
+    }
+}
+
+.nav.flex-column > button.active{
+    color: white !important;
+}
+
 .nav.flex-column{
     & > button{
         height: 48px;

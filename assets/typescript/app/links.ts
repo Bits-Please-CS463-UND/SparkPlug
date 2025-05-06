@@ -36,5 +36,11 @@ window.addEventListener('initFinished', (e) => {
                 showModal("Delete Vehicle?", "This action cannot be undone.");
             })
         }
+
+        // Add new vehicle button
+        const addVehicleLink = document.getElementById('add_vehicle_button_please');
+        if (addVehicleLink instanceof HTMLButtonElement){
+            addVehicleLink.setAttribute('data-request-path', `/api/v1/onboarding/${window.profile.id}`)
+        }
     }
 })

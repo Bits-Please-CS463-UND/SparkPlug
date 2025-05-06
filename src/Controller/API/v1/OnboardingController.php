@@ -4,15 +4,12 @@ declare(strict_types=1);
 namespace App\Controller\API\v1;
 
 use App\Entity\User;
-use App\Entity\Vehicle;
 use App\Repository\UserRepository;
 use App\Response\HandledResponse;
 use App\Response\RedirectResponse;
-use App\Response\SeedResponse;
 use App\Service\JsonNamedValueResolver;
 use App\Service\SeedService;
 use App\Service\VehicleCreationService;
-use App\Struct\SerializedVehicle;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
