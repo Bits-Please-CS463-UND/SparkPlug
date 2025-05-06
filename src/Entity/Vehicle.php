@@ -67,16 +67,17 @@ class Vehicle
 
     #[ORM\OneToMany(
         targetEntity: Notification::class,
-        mappedBy: 'vehicle'
+        mappedBy: 'vehicle',
+        cascade: ['remove'],
     )]
     public Collection $notifications;
 
     #[ORM\JoinTable(name: 'vehicle_locations')]
-    #[ORM\ManyToMany(targetEntity: Location::class)]
+    #[ORM\ManyToMany(targetEntity: Location::class, cascade: ['remove'], orphanRemoval: true)]
     #[ORM\OrderBy(['createdAt' => 'DESC'])]
     public Collection $locations;
 
-    #[ORM\OneToOne(targetEntity: Geofence::class)]
+    #[ORM\OneToOne(targetEntity: Geofence::class, cascade: ['remove'], orphanRemoval: true)]
     public ?Geofence $geofence = null;
 
     public function __construct(){

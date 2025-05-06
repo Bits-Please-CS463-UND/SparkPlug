@@ -1,15 +1,15 @@
 <?php
-namespace App\Controller;
+namespace App\Controller\API\v1;
 
 use App\Entity\LogEntry;
 use App\Repository\LogEntryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/api/v1/vehicle/{vehicleId}/logs')]
 class LogController extends AbstractController

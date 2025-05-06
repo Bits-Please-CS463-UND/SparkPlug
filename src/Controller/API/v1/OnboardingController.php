@@ -11,6 +11,7 @@ use App\Response\RedirectResponse;
 use App\Response\SeedResponse;
 use App\Service\JsonNamedValueResolver;
 use App\Service\SeedService;
+use App\Service\VehicleCreationService;
 use App\Struct\SerializedVehicle;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,6 +29,7 @@ class OnboardingController extends AbstractController
         private UserRepository $userRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly SeedService $seedService,
+        private readonly VehicleCreationService $vehicleCreationService,
     ) {}
     #[Route(
         path: '/{user}',
@@ -44,24 +46,15 @@ class OnboardingController extends AbstractController
         #[ValueResolver(JsonNamedValueResolver::class)] ?string $vin,
         #[ValueResolver(JsonNamedValueResolver::class)] ?string $licensePlates,
     ): JsonResponse{
-        // Fill in vehicle details
-        $vehicle = new Vehicle();
-        $vehicle->make = $make;
-        $vehicle->model = $model;
-        $vehicle->year = $year;
-        $vehicle->color = $color;
-        $vehicle->vin = $vin;
-        $vehicle->licensePlates = $licensePlates;
-        $vehicle->owner = $user;
-
-        // Add association to owner
-        $vehicle->drivers->add($user);
-        $user->ownedVehicles->add($vehicle);
-        $user->sharedVehicles->add($vehicle);
-
-        // Write out
-        $this->entityManager->persist($vehicle);
-        $this->entityManager->flush();
+        $this->vehicleCreationService->create(
+            $user,
+            $make,
+            $model,
+            $year,
+            $color,
+            $vin,
+            $licensePlates
+        );
 
         // Return a seed
         return new JsonResponse(

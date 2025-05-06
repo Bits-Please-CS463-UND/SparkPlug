@@ -2,9 +2,24 @@ import {InitFinishedEvent} from "./events";
 import {populateModalConfirm, showModal, resetModal, redirectOnModalClose} from "../common/modal";
 
 function deleteVehicle(){
-    resetModal();
-    redirectOnModalClose('');
-    showModal('Vehicle Deleted', 'The app will now reload.')
+    const currentVehicle = window.vehicles[window.currentVehicleIndex];
+
+    fetch(
+        `/api/v1/vehicle/${currentVehicle.id}`,
+        {
+            method: "DELETE"
+        }
+    ).then((response) => {
+        if (response.ok){
+            resetModal();
+            redirectOnModalClose('');
+            showModal('Vehicle Deleted', 'The app will now reload.');
+        } else {
+            resetModal();
+            showModal('Fatal Error', 'The vehicle could not be deleted.');
+        }
+    });
+
 }
 
 window.addEventListener('initFinished', (e) => {

@@ -14,7 +14,7 @@ class SerializedVehicle
     public readonly string $model;
     public readonly int $year;
     public readonly string $color;
-    public readonly array $currentLocation;
+    public readonly ?array $currentLocation;
     /** @var array<Location> */
     public readonly array $locationHistory;
     public readonly ?array $geofence;

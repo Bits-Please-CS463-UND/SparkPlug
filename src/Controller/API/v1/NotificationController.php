@@ -1,11 +1,12 @@
 <?php
-namespace App\Controller\API;
+namespace App\Controller\API\v1;
 /* they must have amnesia they forgot that im him*/
+
 use App\Service\NotificationService;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/api/v1/vehicle/{vehicleId}/notifications', name: 'api.v1.notifications.')]
 class NotificationController extends AbstractController
