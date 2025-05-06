@@ -61,8 +61,10 @@ interface User {
 }
 
 interface ApplicationNotification {
+    id: string;
     title: string;
     message: string;
+    priority: string;
 }
 
 interface GPSLocation {
@@ -78,4 +80,5 @@ interface Geofence {
 interface SeedResponse extends HandledResponse {
     vehicles: vehicleData;
     profile: User;
+    notifications: ApplicationNotification[];
 }

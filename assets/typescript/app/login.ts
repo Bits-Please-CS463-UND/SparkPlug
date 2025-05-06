@@ -32,28 +32,7 @@ export function initializeApplication(seed: SeedResponse){
         }
         window.currentVehicleIndex = 0;
 
-        window.notifications = [
-            {
-                title: "Vehicle Update Available (1)",
-                message: "Update your vehicle to receive the latest security patches."
-            },
-            {
-                title: "Vehicle Update Available (2)",
-                message: "Update your vehicle to receive the latest security patches."
-            },
-            {
-                title: "Vehicle Update Available (3)",
-                message: "Update your vehicle to receive the latest security patches."
-            },
-            {
-                title: "Vehicle Update Available (4)",
-                message: "Update your vehicle to receive the latest security patches."
-            },
-            {
-                title: "Vehicle Update Available (5)",
-                message: "Update your vehicle to receive the latest security patches."
-            }
-        ]
+        window.notifications = seed.notifications;
 
         document.querySelectorAll('div.vehicle-selector span.bi-chevron-left, div.vehicle-selector span.bi-chevron-right')
             .forEach((element: Element) => {
