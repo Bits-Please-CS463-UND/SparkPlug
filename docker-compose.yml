@@ -1,0 +1,36 @@
+name: sparkplug_stack
+
+services:
+  server:
+    build:
+      dockerfile: ./Dockerfile
+      target: sparkplug
+    env_file:
+      - path: .env.local
+        required: true
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8018:80"
+    environment:
+      DATABASE_URL: "mysql://root:superSecr3t@db:3306/pde?serverVersion=11.4.2-MariaDB"
+
+  db:
+    image: mariadb:latest
+    ports:
+      - "8306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: superSecr3t
+    networks:
+      - backend
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+networks:
+  backend:
+    driver: bridge

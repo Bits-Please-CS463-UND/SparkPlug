@@ -17,3 +17,7 @@ export function isRedirectResponse(obj: HandledResponse): obj is RedirectRespons
 export function isSecretResponse(obj: HandledResponse): obj is SecretResponse{
     return obj.responseType === "secret";
 }
+
+export function isNotificationBundle(obj: HandledResponse): obj is NotificationBundle{
+    return obj.responseType === "notifications";
+}

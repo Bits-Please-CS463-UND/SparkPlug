@@ -2,28 +2,54 @@
 namespace App\Controller\API\v1;
 /* they must have amnesia they forgot that im him*/
 
+use App\Entity\Notification;
+use App\Entity\User;
+use App\Entity\Vehicle;
+use App\Response\NotificationBundle;
 use App\Service\NotificationService;
+use App\Struct\SerializedNotification;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route(path: '/api/v1/vehicle/{vehicleId}/notifications', name: 'api.v1.notifications.')]
+#[Route(path: '/api/v1/notifications', name: 'api.v1.notifications.')]
 class NotificationController extends AbstractController
 {
-    private NotificationService $notificationService;
 
-    public function __construct(NotificationService $notificationService)
-    {
-        $this->notificationService = $notificationService;
-    }
+    public function __construct(
+        private NotificationService $notificationService
+    ){}
 
-    #[Route(path: '', name: 'list', methods: ['GET'])]
+    #[Route(path: '/{vehicleId}', name: 'list', methods: ['GET'])]
     public function getNotifications(string $vehicleId): JsonResponse
     {
         $notifications = $this->notificationService->getUnseenNotification($vehicleId);
 
         return $this->json($notifications);
+    }
+
+    #[Route(path: '/all/{user}', name: '.all', methods: ['GET'])]
+    public function getAll(User $user): JsonResponse
+    {
+        $notifications = [];
+        foreach($user->sharedVehicles as $vehicle){
+            /** @var Vehicle $vehicle */
+            $notifications += array_map(
+                function (Notification $notification){
+                    return new SerializedNotification($notification);
+                },
+                $vehicle->notifications->filter(function (Notification $n) { return !$n->acknowledged; })->toArray()
+            );
+        }
+
+        return new JsonResponse(
+            new NotificationBundle(
+                "hai",
+                'wsg bruh',
+                $notifications,
+            )
+        );
     }
 // update notifs system
     #[Route(path: '/deterministic', name: 'deterministic', methods: ['GET'])]

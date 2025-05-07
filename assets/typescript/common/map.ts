@@ -1,7 +1,7 @@
 import {icon, Icon, map, Map, marker, polyline, tileLayer} from "leaflet";
 
 export const defaultIcon: Icon = icon({
-    iconUrl: "/img/ralsei.png",
+    iconUrl: "/img/pin.svg",
     iconSize: [16 * 6, 9 * 6],
     iconAnchor: [16 * 3, 9 * 6],
 });

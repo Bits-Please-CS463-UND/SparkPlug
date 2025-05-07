@@ -1,0 +1,27 @@
+server {
+    server_name localhost;
+    root /var/www/uwu/public;
+
+    location / {
+        try_files $uri @uwu;
+    }
+
+    location @uwu {
+        fastcgi_pass unix:/var/run/uwu/php8.3-fpm.sock;
+
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME /var/www/uwu/public/index.php;
+	    fastcgi_param SCRIPT_NAME /index.php;
+	    fastcgi_param REQUEST_URI $uri$is_args$args;
+        fastcgi_param HTTP_HOST localhost;
+
+        internal;
+    }
+
+    location ~ \.php$ {
+        return 404;
+    }
+
+    error_log /var/log/nginx/uwu_error.log;
+    access_log /var/log/nginx/uwu_access.log;
+}

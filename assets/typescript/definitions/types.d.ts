@@ -82,3 +82,7 @@ interface SeedResponse extends HandledResponse {
     profile: User;
     notifications: ApplicationNotification[];
 }
+
+interface NotificationBundle extends HandledResponse {
+    notifications: ApplicationNotification[];
+}
