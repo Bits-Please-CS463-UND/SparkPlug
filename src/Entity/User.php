@@ -37,6 +37,9 @@ class User
         targetEntity: Vehicle::class,
         inversedBy: 'drivers'
     )]
+    #[ORM\JoinTable(
+        name: 'user_shared_vehicles',
+    )]
     public Collection $sharedVehicles;
 
     #[ORM\Column]
