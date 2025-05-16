@@ -1,16 +1,26 @@
 # syntax=docker/dockerfile:1-labs
 FROM php:8.3-fpm AS private_install_pkgs
 RUN apt-get update
-RUN apt-get install libldap-dev libgmp-dev git unzip socat sqlite3 nginx libicu-dev python3 -y
+RUN apt-get install libgmp-dev git unzip socat sqlite3 nginx libsqlite3-dev libicu-dev -y
 RUN docker-php-ext-configure intl
-RUN docker-php-ext-install ldap gmp intl
+RUN docker-php-ext-install gmp intl pdo_sqlite
 
 FROM private_install_pkgs AS private_spk_skeleton
 RUN <<EOF
-mkdir -p /var/run/spk
-chown -R www-data:www-data /var/run/spk
-mkdir -p /var/www/spk
+mkdir -p /var/run/html
+chown -R www-data:www-data /var/run/html
+mkdir -p /var/www/html
 chown -R www-data:www-data /var/www
+cat <<DONE > /usr/local/etc/php-fpm.d/zz-docker.conf
+[global]
+daemonize = no
+
+[www]
+user = www-data
+group = www-data
+listen = /var/run/html/php8.3-fpm.sock
+listen.mode = 0666
+DONE
 EOF
 
 FROM private_spk_skeleton AS private_buildenv_node
@@ -32,10 +42,10 @@ COPY --parents --chown=www-data:www-data  \
     package-lock.json           \
     webpack.config.js           \
     tsconfig.json               \
-    /var/www/spk/
+    /var/www/html/
 
 FROM private_src_assets AS private_src_assets_compiled
-WORKDIR /var/www/spk
+WORKDIR /var/www/html
 USER www-data
 RUN <<EOF
 export NVM_DIR="$HOME/.nvm";
@@ -59,27 +69,27 @@ COPY --parents --chown=www-data:www-data \
     templates                  \
     composer.json              \
     composer.lock              \
-    /var/www/spk/
+    /var/www/html/
 
 FROM private_src_php AS private_src_and_vendor
-WORKDIR /var/www/spk
+WORKDIR /var/www/html
 USER www-data
 RUN <<EOF
-touch /var/www/spk/.env;
+touch /var/www/html/.env;
 DATABASE_DSN="doctrine://default" composer install --optimize-autoloader;
 EOF
 USER root
 
 FROM private_spk_skeleton AS private_all_src
-COPY --from=private_src_and_vendor /var/www/spk /var/www/spk
-COPY --from=private_src_assets_compiled /var/www/spk/public/build /var/www/spk/public/build
+COPY --from=private_src_and_vendor /var/www/html /var/www/html
+COPY --from=private_src_assets_compiled /var/www/html/public/build /var/www/html/public/build
 
 FROM private_all_src AS private_copy_config
 COPY --chmod=755 sh/server_entrypoint.sh /entrypoint.sh
 COPY container /
 
 FROM private_all_src AS sparkplug
-HEALTHCHECK CMD socat -u OPEN:/dev/null UNIX-CONNECT:/var/run/spk/php8.3-fpm.sock;
+HEALTHCHECK CMD socat -u OPEN:/dev/null UNIX-CONNECT:/var/run/html/php8.3-fpm.sock;
 COPY default /etc/nginx/sites-enabled/default
 COPY ./sh/server_entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

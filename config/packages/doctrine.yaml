@@ -8,7 +8,7 @@ framework:
 
 doctrine:
   dbal:
-    url: "%env(DATABASE_DSN)%"
+    url: "sqlite:///%kernel.project_dir%/var/data.sqlite?charset=UTF8"
 
   orm:
     auto_mapping: false

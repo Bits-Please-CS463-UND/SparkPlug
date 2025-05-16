@@ -1,0 +1,48 @@
+name: Publish Image
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  tag:
+    name: Generate container tag from workflow SHA
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.parse.outputs.tag }}
+    steps:
+      - name: Parse SHA
+        id: parse
+        run: echo "TAG=main_$(cut -c 1-7 <<< '${{ github.workflow_sha }}')" >> "$GITHUB_OUTPUT"
+  compile:
+    name: Compile container with Docker Buildx
+    needs: tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build container
+        run: docker buildx build . -t ghcr.io/bits-please-cs463-und/sparkplug:latest -t ghcr.io/bits-please-cs463-und/sparkplug:${{ needs.tag.outputs.tag }}
+      - name: Export container
+        run: docker save ghcr.io/bits-please-cs463-und/sparkplug:latest | gzip - > ${{ needs.tag.outputs.tag }}.tar.gz
+      - uses: actions/upload-artifact@v4
+        name: Upload artifact
+        with:
+          path: '${{ needs.tag.outputs.tag }}.tar.gz'
+          name: 'container_tarball_${{ needs.tag.outputs.tag }}'
+  publish:
+    runs-on: ubuntu-latest
+    needs: ["compile", "tag"]
+    if: ${{ github.event_name == 'push' }}
+    steps:
+      - uses: actions/download-artifact@v4
+        name: Download workflow artifact
+        with:
+          name: 'container_tarball_${{ needs.tag.outputs.tag }}'
+      - name: Load image
+        run: gunzip -c ${{ needs.tag.outputs.tag }}.tar.gz | docker load
+      - name: Log In to Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Publish Image
+        run: docker push --all-tags ghcr.io/bits-please-cs463-und/sparkplug
