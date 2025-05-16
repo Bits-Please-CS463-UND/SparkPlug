@@ -30,7 +30,7 @@ class CreateVehicle extends Command
             $output->writeln([
                 '<error>',
                 '                                                         ',
-                '  [REDACTED] you! you [REDACTED] idiot! the user does not exist!  ',
+                '  the user does not exist! what the heck!!!!!!!!!!!!!!!! ',
                 '                                                         ',
                 '</error>'
             ]);

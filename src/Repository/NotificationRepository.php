@@ -1,5 +1,5 @@
 <?php
-/* majority of my code was written while staring at documentation in a haze so it could totally be bullshit the code was basically writing itself too this stuff is crazy*/
+/* majority of my code was written while staring at documentation in a haze so it could totally be bull[redacted] the code was basically writing itself too this stuff is crazy*/
 namespace App\Repository;
 
 use App\Entity\Notification;
