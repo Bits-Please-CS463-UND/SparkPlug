@@ -44,9 +44,6 @@ class Location
     )]
     public DateTimeInterface $createdAt;
 
-    #[ORM\ManyToOne(targetEntity: Vehicle::class, inversedBy: 'locations')]
-    public Vehicle $vehicle;
-
     public function __construct(){
         $this->createdAt = new DateTimeImmutable();
     }

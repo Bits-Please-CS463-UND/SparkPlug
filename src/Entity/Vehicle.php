@@ -38,6 +38,9 @@ class Vehicle
     )]
     public User $owner;
 
+    #[ORM\JoinTable(
+        name: 'user_shared_vehicles',
+    )]
     #[ORM\ManyToMany(
         targetEntity: User::class,
         mappedBy: 'sharedVehicles',
@@ -69,7 +72,8 @@ class Vehicle
     )]
     public Collection $notifications;
 
-    #[ORM\ManyToOne(targetEntity: Location::class, cascade: ['remove'])]
+    #[ORM\JoinTable(name: 'vehicle_locations')]
+    #[ORM\ManyToMany(targetEntity: Location::class, cascade: ['remove'], orphanRemoval: true)]
     #[ORM\OrderBy(['createdAt' => 'DESC'])]
     public Collection $locations;
 
