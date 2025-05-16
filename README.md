@@ -30,6 +30,18 @@ development status. These can be found in the [`/docs`](/docs) directory.
  - [Project Report 1 (`/docs/report_01.md`)](/docs/report_01.md)
  - [Project Report 2 (`/docs/report_02.md`)](/docs/report_02.md)
 
+## Running
+
+"Binaries" are shipped as OCI images via the GitHub Container Registry.
+To run the application, install Docker on your system and run the following
+command:
+
+```shell
+docker run --rm -p 8018:80 --pull always ghcr.io/bits-please-cs463-und/sparkplug:latest
+```
+
+Once started, the application will be available at `http://localhost:8018`.
+
 ## Development
 
 The following steps can be used to configure a development environment for
@@ -90,5 +102,5 @@ The following frameworks, libraries, etc. are used across the application:
 
 ## License
 
-A license is unlikely to be chosen until development is finished. As such,
-all code is currently proprietary.
+This project is AGPL-licensed. Please abide by its terms if you use any or
+all of this code in your own works.
