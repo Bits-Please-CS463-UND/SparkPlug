@@ -33,6 +33,9 @@ jobs:
           name: 'container_tarball_${{ needs.tag.outputs.tag }}'
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs: ["compile", "tag"]
     if: ${{ github.event_name == 'push' }}
     steps:
